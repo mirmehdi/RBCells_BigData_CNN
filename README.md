@@ -1,4 +1,3 @@
-# apr24_bds_int_blood_cells
 # Peripheral Blood Cell Classification Project
 
 ## Overview
