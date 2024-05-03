@@ -7,7 +7,7 @@ This project aims to develop an automatic recognition system for classifying per
 To develop tools or system that can accurately identify and classify different type of blood cells in smear images using computer vision algorithms. 
 
 ## Goal
-Its primary goal is to leverage computer vision techniques to automate the process of analyzing blood smears and aid in diagnosis of various pathologies, such as leukemia. By accurately identifying and quantifying blood cell types, the tool can assist medical professionals in assessing the density and relative abundance of cells, which is crucial for diagnosing and monitoring certain diseases.
+Its primary goal is to leverage computer vision techniques to automate the process of analyzing blood smears and aid in diagnosis of various pathologies, such as leukemia. By accurately identifying and quantifying blood cell types, the tool can assist medical professionals in assessing the density and relative abundance of cells, which is crucial for diagnosing and monitoring certain diseases and facilitate research purposes.
 
 ## Dataset Description
 - **Total Images:** 17,092
