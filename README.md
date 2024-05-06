@@ -31,7 +31,9 @@ This command will create a new Conda environment with all the dependencies speci
 4. **Activate the newly created environment** by running:
    ```bash
    conda activate bloodCNN
+
 5. **Verify that the environment has been set up correctly** and that all dependencies are installed by running:
    ```bash
    conda list
+   
 By following these steps, you should have a fully configured environment ready to run the project scripts.
