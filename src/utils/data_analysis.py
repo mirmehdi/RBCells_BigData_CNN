@@ -5,8 +5,35 @@ import pandas as pd
 
 
 def analyze_image_sizes(labels, main_folder_path):
-    """Analyze and report image sizes within each label's folder
-       and return a DataFrame."""
+    """
+    Analyzes and reports the dimensions of images across different labeled
+    directories within a specified folder.
+
+    Parameters:
+    - labels (list of str): A list of subdirectory names representing labels
+      or classes in the dataset.
+    - main_folder_path (str): The path to the main directory that contains the
+      labeled subdirectories.
+
+    Returns:
+    - pandas.DataFrame: A DataFrame containing columns for 'Label', 'Size',
+      and 'Count'. Each row represents the count of a specific image size
+      (width x height) for a given label.
+
+    Example:
+    Assume a directory structure:
+        - /path/to/data/
+            - basophil/
+                - basophil1.jpg (100x200)
+                - basophil2.jpg (100x200)
+            - eosinophil/
+                - eosinophil1.jpg (150x200)
+    Calling `analyze_image_sizes(['basophil', 'eosinophil'], '/path/to/data/')`
+    would return:
+        Label      | Size     | Count
+        basophil   | 100x200  | 2
+        eosinophil | 150x200  | 1
+    """
     image_sizes = {}  # Dictionary to store size counts
 
     for label in labels:
@@ -42,8 +69,37 @@ def analyze_image_sizes(labels, main_folder_path):
 
 
 def filter_images_by_size(labels, main_folder_path, target_size=(360, 363)):
-    """Filter images by a specific size and return a DataFrame
-       with the filtered image paths."""
+    """
+    Filters images by a specified size from labeled subdirectories and returns
+    a DataFrame with the filtered image paths.
+
+    Parameters:
+    - labels (list of str): A list of subdirectory names representing labels
+      or classes in the dataset.
+    - main_folder_path (str): The path to the main directory that contains the
+      labeled subdirectories.
+    - target_size (tuple of int, int, optional): The desired dimensions
+      (width, height) of the images to filter. Default is (360, 363).
+
+    Returns:
+    - pandas.DataFrame: A DataFrame icluding columns 'Label' and 'Image_Path'.
+      Each row represents an image that meets the size criteria under its
+      respective label.
+
+    Example:
+    Assume a directory structure:
+        - /path/to/data/
+            - basophil/
+                - basophil1.jpg (360x363)
+                - basophil2.jpg (400x400)
+            - eosinophil/
+                - eosinophil1.jpg (360x363)
+    Calling `filter_images_by_size(['basophil', 'eosinophil'], '/path/to/data/'
+    ,target_size=(360, 363))` would return:
+        Label | Image_Path
+        basophil    | /path/to/data/basophil/basophil1.jpg
+        eosinophil  | /path/to/data/eosinophil/eosinophil1.jpg
+    """
     images_filtered = {label: [] for label in labels}
 
     for label in labels:
