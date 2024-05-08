@@ -6,8 +6,30 @@ import plotly.express as px
 
 
 def plot_image_distribution(df, title, xlabel, ylabel):
-    """Create a bar plot to explore visually the distribution
-       of image classes."""
+    """
+    Creates and displays a bar plot to visualize the distribution of image
+    classes using data from a DataFrame.
+
+    Parameters:
+    - df (pandas.DataFrame): The DataFrame containing the data to plot. It
+      should have columns 'Label' and 'Number of Images'.
+    - title (str): The title of the plot.
+    - xlabel (str): The label for the x-axis.
+    - ylabel (str): The label for the y-axis.
+
+    Returns:
+    - None: This function does not return any value but displays
+      a matplotlib plot.
+
+    Example Usage:
+    Assuming 'df_images' is a DataFrame with the following columns:
+        - Label: ['basophil', 'eosinophil']
+        - Number of Images: [150, 200]
+    Calling `plot_image_distribution(df_images, 'Distribution of Cell Images'
+    , 'Cell Type', 'Number of Images')`
+    would display a bar plot illustrating the distribution of basophil and
+    eosinophil images in the dataset.
+    """
     plt.figure(figsize=(10, 6))
     sns.barplot(x='Label', y='Number of Images', data=df, palette='Set2')
     plt.title(title, fontsize=16)
@@ -19,7 +41,27 @@ def plot_image_distribution(df, title, xlabel, ylabel):
 
 
 def display_sample_images(labels, main_folder_path):
-    """Displays the first image from each class in a grid."""
+    """
+    Displays the first image from each labeled subdirectory in a 2x4 grid
+    layout.
+
+    Parameters:
+    - labels (list of str): A list of subdirectory names, each representing a
+      distinct class or label in the dataset.
+    - main_folder_path (str): The path to the main directory containing the
+      labeled subfolders.
+
+    Returns:
+    - None: This function does not return any value but displays a grid of
+      images using matplotlib.
+
+    Example Usage:
+    Assume you have a directory '/path/to/data' with subdirectories 'basophil',
+    'eosinophil', etc., each containing image files.
+    Calling `display_sample_images(['basophil', 'eosinophil'],
+    '/path/to/data')` would display the first image from each of the 'basophil'
+    and 'eosinophil' subdirectories in a grid.
+    """
     fig, axes = plt.subplots(2, 4, figsize=(20, 10))
     axes = axes.ravel()
 
@@ -39,8 +81,32 @@ def display_sample_images(labels, main_folder_path):
 
 def create_interactive_bar_plot(df, x_column, y_column, color_column,
                                 title, xlabel, ylabel):
-    """Create an interactive bar plot using Plotly Express
-       with predefined hover data."""
+    """
+    Creates and displays an interactive bar plot using Plotly Express.
+    The plot is customizable with hover data and labels provided as parameters.
+
+    Parameters:
+    - df (pandas.DataFrame): The DataFrame containing the data to plot.
+    - x_column (str): The column name to be used for the x-axis.
+    - y_column (str): The column name to be used for the y-axis and as text on
+      the bars.
+    - color_column (str): The column name to be used for color coding the bars.
+    - title (str): The title of the plot.
+    - xlabel (str): The label for the x-axis.
+    - ylabel (str): The label for the y-axis.
+
+    Returns:
+    - None: This function does not return any value but displays a Plotly
+      interactive plot.
+
+    Example Usage:
+    Assuming 'df' is a DataFrame with columns 'Labels', 'Number of Images',
+    and 'Sizes':
+    Calling `create_interactive_bar_plot(df_sales, 'Labels', 'Number of Images'
+    , 'Sizes', 'Distribution of Image Size across Classes', 'Labels', 'Count')`
+    would display a bar plot showing monthly sales, color-coded by region,
+    with interactive hover effects.
+    """
     # Define hover data internally within the function
     hover_data = {color_column: True, y_column: True}
 
