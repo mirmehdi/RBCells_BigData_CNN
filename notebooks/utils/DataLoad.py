@@ -4,13 +4,13 @@ import numpy as np
 import pandas as pd
 
 class DataLoad:
-    def __init__(self, classes_dir, image_int_size=(360, 360), pixel_data_path='pixels.npy', dataframe_path='data.csv'):
+    def __init__(self, classes_dir, image_int_size=(360, 360), dataframe_path='data.csv'):
         self.classes_dir = classes_dir
         self.image_int_size = image_int_size
-        self.pixel_data_path = pixel_data_path
+        # self.pixel_data_path = pixel_data_path
         self.dataframe_path = dataframe_path
         self.image_size = []
-        self.pixels = []
+        # self.pixels = []  # Maintain this if you still need to process or save the pixel data separately
         self.labels = []
         self.load_data()
 
@@ -30,31 +30,31 @@ class DataLoad:
                     image_path = os.path.join(class_dir, image_file)
                     try:
                         image = Image.open(image_path)
-                        image = image.resize(self.image_int_size)
-                        flattened_image = np.array(image).flatten()
-                        self.pixels.append(flattened_image)
+                        # image = image.resize(self.image_int_size)
+                        # flattened_image = np.array(image).flatten()
+                        # self.pixels.append(flattened_image)  # Only store pixels if needed elsewhere
                         self.labels.append(class_idx)
                         self.image_size.append(image.size)  # Append a tuple (width, height)
 
                     except Exception as e:
                         print(f"Error processing {image_path}: {e}")
 
-            self.pixels = np.array(self.pixels)
             self.labels = np.array(self.labels)
             self.image_size = np.array(self.image_size)
 
-            # Create a DataFrame for the pixels and add additional columns for labels and image dimensions
-            self.df_pixels = pd.DataFrame(self.pixels)
-            self.df_pixels['Label'] = self.labels
-            self.df_pixels['ImageSize_D1'] = self.image_size[:, 0]  # Width
-            self.df_pixels['ImageSize_D2'] = self.image_size[:, 1]  # Height
+            # Create a DataFrame without pixel data
+            self.df = pd.DataFrame({
+                'Label': self.labels,
+                'ImageSize_D1': [size[0] for size in self.image_size],
+                'ImageSize_D2': [size[1] for size in self.image_size]
+            })
 
         except Exception as e:
             print(f"Error loading data: {e}")
 
-    def save_data(self):
-        # Save the entire DataFrame including pixels and metadata as a CSV file
-        self.df_pixels.to_csv(self.dataframe_path, index=False)
+    def save_data(self, path):
+        # Save the DataFrame without pixel data as a CSV file
+        self.df.to_csv(path, index=False)
         print(f"Dataframe saved to {self.dataframe_path}")
 
 # Example usage
