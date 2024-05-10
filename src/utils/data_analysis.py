@@ -122,3 +122,85 @@ def filter_images_by_size(labels, main_folder_path, target_size=(360, 363)):
             rows.append({'Label': label, 'Image_Path': path})
 
     return pd.DataFrame(rows)
+
+
+def count_images_by_label(df):
+    """
+    Counts the number of images per label in a DataFrame and returns
+    a DataFrame with these counts.
+
+    This function assumes the DataFrame has columns 'Label' and 'Image_Path'.
+    It groups the data by 'Label', counts the occurrences, and formats the
+    result into a readable DataFrame.
+
+    Parameters:
+    - df (pandas.DataFrame): DataFrame containing the image data with columns
+      'Label' and 'Image_Path'.
+
+    Returns:
+    - pandas.DataFrame: A new DataFrame with columns 'Label' and
+      'Number of Images', where each row represents a label and the count of
+      images associated with that label.
+
+    Example Usage:
+    >>> df_images = pd.DataFrame({
+    ...    'Label': ['basophil', 'basophil', 'eosinophil'],
+    ...    'Image_Path': ['path/to/image1', 'path/to/image2', 'path/to/image3']
+    ... })
+    >>> image_counts = count_images_by_label(df_images)
+    >>> print(image_counts)
+       Label  Number of Images
+    0  basophil               2
+    1  eosinophil             1
+    """
+    # Group the DataFrame by 'Label' and count the number of images
+    # in each group
+    image_counts = df.groupby('Label').count()
+
+    # Rename the column for clarity
+    image_counts.rename(columns={'Image_Path': 'Number of Images'},
+                        inplace=True)
+
+    # Reset the index to make 'Label' a column again
+    image_counts.reset_index(inplace=True)
+
+    return image_counts
+
+
+def balance_data_by_downsampling(df, seed=1):
+    """
+    Balances the dataset by down-sampling all classes to the size of the
+    smallest class.
+
+    Parameters:
+    - df (pandas.DataFrame): A DataFrame containing at least 'Label' and
+      'Image_Path' columns, where 'Label' indicates the class of each image.
+    - seed (int, optional): A seed for the random number generator used in
+      sampling for reproducibility.
+
+    Returns:
+    - pandas.DataFrame: A new DataFrame where each class has been down-sampled
+      to the same number of images, equivalent to the count of the smallest
+      class in the original dataset.
+
+    Example Usage:
+    Assuming 'df_images' is a DataFrame with columns 'Label' and 'Image_Path':
+        balanced_images = balance_data_by_downsampling(df_images)
+        print(balanced_images)
+    """
+
+    # Determine the minimum image count across all labels
+    min_image_count = df['Label'].value_counts().min()
+    # print(f"Minimum image count for balancing: {min_image_count}")
+
+    # Sample the same number of images from each label
+    balanced_df = pd.DataFrame()
+    for label in df['Label'].unique():
+        sampled_df = df[df['Label'] == label].sample(n=min_image_count,
+                                                     random_state=seed)
+        balanced_df = pd.concat([balanced_df, sampled_df], ignore_index=True)
+
+    # Reset index for clean formatting
+    balanced_df.reset_index(drop=True, inplace=True)
+
+    return balanced_df
