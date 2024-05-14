@@ -3,7 +3,7 @@ import seaborn as sns
 from PIL import Image
 import os
 import plotly.express as px
-
+import cv2
 
 def plot_image_distribution(df, title, xlabel, ylabel):
     """
@@ -120,3 +120,49 @@ def create_interactive_bar_plot(df, x_column, y_column, color_column,
                       xaxis_tickangle=-45, width=1100, height=600)
 
     fig.show()
+
+# subplot the images samples from each class
+def visualize_images(first_images, main_folder_path):
+    '''
+    Input: first_images from data_analysis.segmentation_openCV() 
+    Output: plot 8X3, save 
+    '''
+    if not first_images:
+        print("No images to display.")
+        return
+    fig, axs = plt.subplots(nrows=len(first_images), ncols=3, figsize=(15, 4 * len(first_images)))
+    for idx, (class_name, (img_gray, thresholded, contours)) in enumerate(first_images.items()):
+        contour_image = cv2.cvtColor(thresholded.copy(), cv2.COLOR_GRAY2BGR)
+        cv2.drawContours(contour_image, contours, -1, (0, 255, 0), 3)
+
+        axs[idx, 0].imshow(img_gray, cmap='gray')
+        axs[idx, 0].set_title(f'{class_name} - Original')
+        axs[idx, 0].axis('off')
+
+        axs[idx, 1].imshow(thresholded, cmap='gray')
+        axs[idx, 1].set_title(f'{class_name} - Thresholded')
+        axs[idx, 1].axis('off')
+
+        axs[idx, 2].imshow(contour_image)
+        axs[idx, 2].set_title(f'{class_name} - Contours')
+        axs[idx, 2].axis('off')
+
+    plt.tight_layout()
+    save_path = '/Users/mehdienrahimi/apr24_bds_int_blood_cells/src/outputs/samples_segmentationOpenCV.jpg'
+    plt.savefig(save_path)
+    # plt.close(fig)  # Close the figure to free up memory
+
+def dist_cell_area(df_segmentation,main_folder_path):
+            '''Input: df_segmentation from data_analysis.segmentation_openCV() 
+            output: barplot of cell area vs. labels'''
+        # Create the plot using Seaborn
+            a = df_segmentation.groupby('Label')['CellArea'].mean().reset_index()
+            # Create the plot using Seaborn
+            plt.figure(figsize=(10, 6))
+            bar_plot = sns.barplot(x='Label', y='CellArea', data=a)
+            plt.title('Mean Cell Area per Label')
+            plt.xlabel('Label')
+            plt.ylabel('Mean Cell Area')
+            plt.show()
+            save_path = '/Users/mehdienrahimi/apr24_bds_int_blood_cells/src/outputs/CellAreaDistribution_segmentationOpenCV.jpg'
+            plt.savefig(save_path)
