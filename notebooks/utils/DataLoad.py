@@ -30,7 +30,7 @@ class DataLoad:
                     image_path = os.path.join(class_dir, image_file)
                     try:
                         image = Image.open(image_path)
-                        # image = image.resize(self.image_int_size)
+                        # image = imagopene.resize(self.image_int_size)
                         # flattened_image = np.array(image).flatten()
                         # self.pixels.append(flattened_image)  # Only store pixels if needed elsewhere
                         self.labels.append(class_idx)

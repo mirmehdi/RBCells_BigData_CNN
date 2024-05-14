@@ -18,6 +18,21 @@ class Visualization:
         # Since displot returns a FacetGrid, we access the figure to save it
         g.figure.savefig(path)  # Use savefig with the path
 
+    def dist_cell_area(self,path):
+        # Create the plot using Seaborn
+        a = self.df.groupby('Label')['CellArea'].mean().reset_index()
+        # Create the plot using Seaborn
+        g = plt.subplot(2,1)
+        sns.barplot(x='Label', y='CellArea', data=a)
+        b = self.df.groupby('Label')['CellArea'].std().reset_index()
+        # Create the plot using Seaborn
+        sns.barplot(x='Label', y='CellArea', data=c)
+        plt.show()  # Display the plot
+
+        # Save the figure
+        # Since displot returns a FacetGrid, we access the figure to save it
+        g.figure.savefig(path)  # Use savefig with the path
+
     def img_size_dist(self,path):
         df = self.df
         df['Dimension'] = df['ImageSize_D1'].astype(str) + 'x' + df['ImageSize_D2'].astype(str)
