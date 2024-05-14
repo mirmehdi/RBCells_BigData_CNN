@@ -24,6 +24,7 @@ save_data_dir = '/Users/mehdienrahimi/apr24_bds_int_blood_cells/notebooks/output
 # data_loader.save_data(save_path) 
 
 
+
 # # # Visualize the data
 # visualizer = Visualization(data_loader.df)
 # save_path = os.path.join(save_data_dir, 'hist.png')

@@ -3,21 +3,25 @@
 # Import everything from our custom imports module
 # Please add your libraries to the import module
 from utils.imports import *
-# Please add any functions related to loading/working data to data_loader module
+# Please add any functions related to loading/working data to data_loader
+# module
 from utils.data_loader import load_dataset_labels, load_images_with_labels
 # Please add any plot functions to the visualize module
-from visualization.visualize import (
-    plot_image_distribution,
-    display_sample_images,
-    create_interactive_bar_plot
-)
+from visualization.visualize import (plot_image_distribution,
+                                     display_sample_images,
+                                     create_interactive_bar_plot
+                                     )
 # Please add any data analysis functions to data_analysis module
-from utils.data_analysis import analyze_image_sizes, filter_images_by_size
+from utils.data_analysis import (analyze_image_sizes,
+                                 filter_images_by_size,
+                                 count_images_by_label,
+                                 balance_data_by_downsampling
+                                 )
 
 
 # Define the path to the dataset
 # For me, PBC_dataset_normal_DIB is unzipped folder including 8 subfilders
-main_folder_path = ('Path_your_dataset/PBC_dataset_normal_DIB')
+main_folder_path = ('/Path_to_dataset/PBC_dataset_normal_DIB')
 
 # Load dataset labels
 # Here, we can save the name of classes that we need them a lot
@@ -40,10 +44,10 @@ images_with_labels, image_counts_df = load_images_with_labels(main_folder_path)
 
 # Display a bar plot to explore visually the distribution of image classes
 plot_image_distribution(
-    df=image_counts_df,
-    title='Distribution of Image Classes in the Dataset',
-    xlabel='Cell Type (Label)',
-    ylabel='Number of Images'
+   df=image_counts_df,
+   title='Distribution of Image Classes in the Dataset',
+   xlabel='Cell Type (Label)',
+   ylabel='Number of Images'
 )
 
 # Display sample images from each label
@@ -55,13 +59,13 @@ df_sizes = analyze_image_sizes(labels, main_folder_path)
 
 # Display df_sizes dataFrame
 create_interactive_bar_plot(
-    df=df_sizes,
-    x_column='Label',
-    y_column='Count',
-    color_column='Size',
-    title='Distribution of Image Sizes Across Classes',
-    xlabel='Cell Type',
-    ylabel='Number of Images'
+   df=df_sizes,
+   x_column='Label',
+   y_column='Count',
+   color_column='Size',
+   title='Distribution of Image Sizes Across Classes',
+   xlabel='Cell Type',
+   ylabel='Number of Images'
 )
 
 """
@@ -97,17 +101,7 @@ df_images = filter_images_by_size(labels, main_folder_path,
 # json_file_path = os.path.join(data_folder_path, 'uniform_image_sizes.json')
 # df_images.to_json(json_file_path, orient='records')
 # ----------------------------------------------------------------------------
-
-# Group the DataFrame by 'Label' and count the number of images in each group
-image_counts = df_images.groupby('Label').count()
-
-# Rename the column for clarity
-image_counts.rename(columns={'Image_Path': 'Number of Images'}, inplace=True)
-
-# Reset the index to make 'Label' a column again
-image_counts.reset_index(inplace=True)
-
-# Display the DataFrame
+image_counts = count_images_by_label(df_images)
 # print(image_counts)
 
 # Display image_counts dataFrame
@@ -117,3 +111,39 @@ plot_image_distribution(
     xlabel='Cell Type (Label)',
     ylabel='Number of Images'
 )
+
+# Resolving Imbalance in Data with Down-Sampling
+"""
+Down-sampling is employed to address data imbalance across different classes.
+This technique involves identifying the class with the minimum number of
+images and then reducing the image counts in other classes to match this
+minimum count.
+"""
+balanced_images = balance_data_by_downsampling(df_images)
+# print(balanced_images)
+
+balanced_image_counts = count_images_by_label(balanced_images)
+# print(balanced_image_counts)
+
+# Display image_counts dataFrame
+plot_image_distribution(
+    df=balanced_image_counts,
+    title='Distribution of Balanced Image Classes in the Dataset',
+    xlabel='Cell Type (Label)',
+    ylabel='Number of Images'
+)
+
+# ----------------------------------------------------------------------------
+# Here, I have saved both CSV and JASON format of balanced dataframe
+# You don't need to uncomment this part
+# Save the DataFrame to a CSV and jason files for easy sharing
+# data_folder_path = '/apr24_bds_int_blood_cells/src/data'
+
+# Save the DataFrame to a CSV file
+# csv_file_path = os.path.join(data_folder_path, 'balanced_image_paths.csv')
+# df_images.to_csv(csv_file_path, index=False)
+
+# Save the DataFrame to a JSON file
+# json_file_path = os.path.join(data_folder_path, 'balanced_image_paths.json')
+# df_images.to_json(json_file_path, orient='records')
+# ----------------------------------------------------------------------------
