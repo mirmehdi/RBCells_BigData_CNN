@@ -151,18 +151,75 @@ def visualize_images(first_images, main_folder_path):
     save_path = '/Users/mehdienrahimi/apr24_bds_int_blood_cells/src/outputs/samples_segmentationOpenCV.jpg'
     plt.savefig(save_path)
     # plt.close(fig)  # Close the figure to free up memory
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-def dist_cell_area(df_segmentation,main_folder_path):
-            '''Input: df_segmentation from data_analysis.segmentation_openCV() 
-            output: barplot of cell area vs. labels'''
-        # Create the plot using Seaborn
-            a = df_segmentation.groupby('Label')['CellArea'].mean().reset_index()
-            # Create the plot using Seaborn
-            plt.figure(figsize=(10, 6))
-            bar_plot = sns.barplot(x='Label', y='CellArea', data=a)
-            plt.title('Mean Cell Area per Label')
-            plt.xlabel('Label')
-            plt.ylabel('Mean Cell Area')
-            plt.show()
-            save_path = '/Users/mehdienrahimi/apr24_bds_int_blood_cells/src/outputs/CellAreaDistribution_segmentationOpenCV.jpg'
-            plt.savefig(save_path)
+def dist_cell_area(df_segmentation):
+    '''Input: df_segmentation from data_analysis.segmentation_openCV()
+    Output: barplot of mean cell area, cell perimeter, and cell circularity vs. labels'''
+
+    # Setup the figure and subplots
+    plt.figure(figsize=(18, 12))  # Adjusted for better fit of all plots
+
+    # First subplot: Mean Cell Area per Label
+    plt.subplot(3, 2, 1)  # (row, column, index)
+    mean_area = df_segmentation.groupby('Label')['CellArea'].mean().reset_index()
+    sns.barplot(x='Label', y='CellArea', data=mean_area)
+    plt.title('Mean Cell Area per Label')
+    plt.xlabel('Label')
+    plt.ylabel('Mean Cell Area')
+    plt.xticks(rotation=45)
+
+    # Second subplot: Standard Deviation of Cell Area per Label
+    plt.subplot(3, 2, 2)
+    std_area = df_segmentation.groupby('Label')['CellArea'].std().reset_index()
+    sns.barplot(x='Label', y='CellArea', data=std_area)
+    plt.title('Standard Deviation of Cell Area per Label')
+    plt.xlabel('Label')
+    plt.ylabel('Standard Deviation of Cell Area')
+    plt.xticks(rotation=45)
+
+    # Third subplot: Mean Cell Perimeter per Label
+    plt.subplot(3, 2, 3)
+    mean_perimeter = df_segmentation.groupby('Label')['Cell_perimeter'].mean().reset_index()
+    sns.barplot(x='Label', y='Cell_perimeter', data=mean_perimeter)
+    plt.title('Mean Cell Perimeter per Label')
+    plt.xlabel('Label')
+    plt.ylabel('Mean Cell Perimeter')
+    plt.xticks(rotation=45)
+
+    # Fourth subplot: Standard Deviation of Cell Perimeter per Label
+    plt.subplot(3, 2, 4)
+    std_perimeter = df_segmentation.groupby('Label')['Cell_perimeter'].std().reset_index()
+    sns.barplot(x='Label', y='Cell_perimeter', data=std_perimeter)
+    plt.title('Standard Deviation of Cell Perimeter per Label')
+    plt.xlabel('Label')
+    plt.ylabel('Standard Deviation of Cell Perimeter')
+    plt.xticks(rotation=45)
+
+    # Fifth subplot: Mean Cell Circularity per Label
+    plt.subplot(3, 2, 5)
+    mean_circularity = df_segmentation.groupby('Label')['cell_circularity'].mean().reset_index()
+    sns.barplot(x='Label', y='cell_circularity', data=mean_circularity)
+    plt.title('Mean Cell Circularity per Label')
+    plt.xlabel('Label')
+    plt.ylabel('Mean Cell Circularity')
+    plt.xticks(rotation=45)
+
+    # Sixth subplot: Standard Deviation of Cell Circularity per Label
+    plt.subplot(3, 2, 6)
+    std_circularity = df_segmentation.groupby('Label')['cell_circularity'].std().reset_index()
+    sns.barplot(x='Label', y='cell_circularity', data=std_circularity)
+    plt.title('Standard Deviation of Cell Circularity per Label')
+    plt.xlabel('Label')
+    plt.ylabel('Standard Deviation of Cell Circularity')
+    plt.xticks(rotation=45)
+
+    plt.tight_layout()
+
+    # Save the plot and display it
+    save_path = '/Users/mehdienrahimi/apr24_bds_int_blood_cells/src/outputs/CellMetricsDistribution_segmentationOpenCV.jpg'
+    plt.savefig(save_path)
+    plt.show()
+
+

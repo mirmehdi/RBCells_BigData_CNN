@@ -208,13 +208,12 @@ def balance_data_by_downsampling(df, seed=1):
     return balanced_df
 
 
-
 def segmentation_openCV(main_folder_path, image_int_size=(360, 360), dataframe_path='data.csv'):
-
-
     classes_dir = main_folder_path
     image_sizes = []
     cell_areas = []
+    cell_circularity = []
+    cell_perimeter = []
     labels = []
     first_images = {}  # Initialize the dictionary for first images
     df = pd.DataFrame()  # Initialize DataFrame to avoid UnboundLocalError
@@ -234,33 +233,35 @@ def segmentation_openCV(main_folder_path, image_int_size=(360, 360), dataframe_p
                     _, thresholded = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY_INV)
                     contours, _ = cv2.findContours(thresholded, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-                    if class_name not in first_images:  # Save the first image only
+                    if class_name not in first_images:
                         first_images[class_name] = (img_gray, thresholded, contours)
 
                     max_area = max([cv2.contourArea(contour) for contour in contours], default=0)
+                    perimeter = cv2.arcLength(contours[0], True) if contours else 0
+                    circularity = ((perimeter ** 2) / (4 * np.pi * max_area)) if max_area != 0 else 0
 
-                    labels.append(class_idx)
+                    labels.append(class_name)
                     image_sizes.append(img_gray.size)
                     cell_areas.append(max_area)
+                    cell_perimeter.append(perimeter)
+                    cell_circularity.append(circularity)
 
                 except Exception as e:
                     print(f"Error processing {image_path}: {e}")
 
-        labels = np.array(labels)
-        image_sizes = np.array(image_sizes)
-        cell_areas = np.array(cell_areas)
-
         df = pd.DataFrame({
             'Label': labels,
             'ImageSize': image_sizes,
-            'CellArea': cell_areas
+            'CellArea': cell_areas,
+            'Cell_perimeter': cell_perimeter,
+            'cell_circularity': cell_circularity
         })
 
     except Exception as e:
         print(f"Error loading data: {e}")
 
-        
-        save_path = '/Users/mehdienrahimi/apr24_bds_int_blood_cells/src/outputs/DataSet_segmentation_openCV.csv'
-        df.to_csv(save_path, index=False)
+    # Save DataFrame to CSV
+    save_path = '/Users/mehdienrahimi/apr24_bds_int_blood_cells/src/outputs/DataSet_segmentation_openCV.csv'
+    df.to_csv(save_path, index=False)
 
     return df, first_images
