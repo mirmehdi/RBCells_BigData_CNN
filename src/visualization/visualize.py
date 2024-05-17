@@ -151,8 +151,7 @@ def visualize_images(first_images, main_folder_path):
     save_path = '/Users/mehdienrahimi/apr24_bds_int_blood_cells/src/outputs/samples_segmentationOpenCV.jpg'
     plt.savefig(save_path)
     # plt.close(fig)  # Close the figure to free up memory
-import matplotlib.pyplot as plt
-import seaborn as sns
+
 
 def dist_cell_area(df_segmentation):
     '''Input: df_segmentation from data_analysis.segmentation_openCV()
@@ -164,7 +163,7 @@ def dist_cell_area(df_segmentation):
     # First subplot: Mean Cell Area per Label
     plt.subplot(3, 2, 1)  # (row, column, index)
     mean_area = df_segmentation.groupby('Label')['CellArea'].mean().reset_index()
-    sns.barplot(x='Label', y='CellArea', data=mean_area)
+    sns.barplot(x='Label', y='CellArea', data=mean_area, palette='Set2')
     plt.title('Mean Cell Area per Label')
     plt.xlabel('Label')
     plt.ylabel('Mean Cell Area')
@@ -173,7 +172,7 @@ def dist_cell_area(df_segmentation):
     # Second subplot: Standard Deviation of Cell Area per Label
     plt.subplot(3, 2, 2)
     std_area = df_segmentation.groupby('Label')['CellArea'].std().reset_index()
-    sns.barplot(x='Label', y='CellArea', data=std_area)
+    sns.barplot(x='Label', y='CellArea', data=std_area, palette='Set2')
     plt.title('Standard Deviation of Cell Area per Label')
     plt.xlabel('Label')
     plt.ylabel('Standard Deviation of Cell Area')
@@ -182,7 +181,7 @@ def dist_cell_area(df_segmentation):
     # Third subplot: Mean Cell Perimeter per Label
     plt.subplot(3, 2, 3)
     mean_perimeter = df_segmentation.groupby('Label')['Cell_perimeter'].mean().reset_index()
-    sns.barplot(x='Label', y='Cell_perimeter', data=mean_perimeter)
+    sns.barplot(x='Label', y='Cell_perimeter', data=mean_perimeter, palette='Set2')
     plt.title('Mean Cell Perimeter per Label')
     plt.xlabel('Label')
     plt.ylabel('Mean Cell Perimeter')
@@ -191,7 +190,7 @@ def dist_cell_area(df_segmentation):
     # Fourth subplot: Standard Deviation of Cell Perimeter per Label
     plt.subplot(3, 2, 4)
     std_perimeter = df_segmentation.groupby('Label')['Cell_perimeter'].std().reset_index()
-    sns.barplot(x='Label', y='Cell_perimeter', data=std_perimeter)
+    sns.barplot(x='Label', y='Cell_perimeter', data=std_perimeter, palette='Set2')
     plt.title('Standard Deviation of Cell Perimeter per Label')
     plt.xlabel('Label')
     plt.ylabel('Standard Deviation of Cell Perimeter')
@@ -200,7 +199,7 @@ def dist_cell_area(df_segmentation):
     # Fifth subplot: Mean Cell Circularity per Label
     plt.subplot(3, 2, 5)
     mean_circularity = df_segmentation.groupby('Label')['cell_circularity'].mean().reset_index()
-    sns.barplot(x='Label', y='cell_circularity', data=mean_circularity)
+    sns.barplot(x='Label', y='cell_circularity', data=mean_circularity, palette='Set2')
     plt.title('Mean Cell Circularity per Label')
     plt.xlabel('Label')
     plt.ylabel('Mean Cell Circularity')
@@ -209,7 +208,7 @@ def dist_cell_area(df_segmentation):
     # Sixth subplot: Standard Deviation of Cell Circularity per Label
     plt.subplot(3, 2, 6)
     std_circularity = df_segmentation.groupby('Label')['cell_circularity'].std().reset_index()
-    sns.barplot(x='Label', y='cell_circularity', data=std_circularity)
+    sns.barplot(x='Label', y='cell_circularity', data=std_circularity, palette='Set2')
     plt.title('Standard Deviation of Cell Circularity per Label')
     plt.xlabel('Label')
     plt.ylabel('Standard Deviation of Cell Circularity')
