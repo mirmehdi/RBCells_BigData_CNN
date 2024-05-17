@@ -233,13 +233,16 @@ def segmentation_openCV(main_folder_path, image_int_size=(360, 360), dataframe_p
                     _, thresholded = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY_INV)
                     contours, _ = cv2.findContours(thresholded, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-                    if class_name not in first_images:
-                        first_images[class_name] = (img_gray, thresholded, contours)
-
-                    max_area = max([cv2.contourArea(contour) for contour in contours], default=0)
-                    perimeter = cv2.arcLength(contours[0], True) if contours else 0
-                    circularity = ((perimeter ** 2) / (4 * np.pi * max_area)) if max_area != 0 else 0
-
+                    if contours:  # Check if any contours were detected
+                        # Find the largest contour based on area
+                        largest_contour = max(contours, key=cv2.contourArea)
+                        max_area = cv2.contourArea(largest_contour)
+                        perimeter = cv2.arcLength(largest_contour, True)
+                        circularity = (perimeter ** 2) / (4 * np.pi * max_area) if max_area != 0 else 0
+                    else:
+                        max_area = 0
+                        perimeter = 0
+                        circularity = 0
                     labels.append(class_name)
                     image_sizes.append(img_gray.size)
                     cell_areas.append(max_area)
