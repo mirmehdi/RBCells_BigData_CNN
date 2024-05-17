@@ -154,6 +154,6 @@ plot_image_distribution(
 
 ### Image segmentation part
 df_segmentation, first_images = segmentation_openCV(main_folder_path)
-#visualize_images(first_images, main_folder_path)
+visualize_images(first_images, main_folder_path)
 dist_cell_area(df_segmentation)
 
