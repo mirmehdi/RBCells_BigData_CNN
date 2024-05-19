@@ -1,0 +1,87 @@
+First few rows of the DataFrame:
+      Label  ImageSize  CellArea  Cell_perimeter  cell_circularity
+0  basophil     130680   10904.0       15.071068          0.001658
+1  basophil     130680   12512.5       11.656854          0.000864
+2  basophil     135054   12104.5        4.828427          0.000153
+3  basophil     130680    9821.5        3.414214          0.000094
+4  basophil     130680    8100.0       45.455843          0.020299
+
+Saved CellArea_distribution.png
+
+Saved Cell_perimeter_distribution.png
+
+Saved cell_circularity_distribution.png
+
+Shapiro-Wilk test results for normality:
+Shapiro-Wilk test for CellArea of basophil:
+Statistic: 0.9890971164459483, p-value: 7.150075853443025e-08
+
+Shapiro-Wilk test for CellArea of neutrophil:
+Statistic: 0.942537512675053, p-value: 3.750542244082537e-34
+
+Shapiro-Wilk test for CellArea of ig:
+Statistic: 0.8849743283524292, p-value: 4.8995950414475634e-42
+
+Shapiro-Wilk test for CellArea of monocyte:
+Statistic: 0.9637924817482493, p-value: 2.393379344794262e-18
+
+Shapiro-Wilk test for CellArea of eosinophil:
+Statistic: 0.9807852078755132, p-value: 3.8520161959612836e-20
+
+Shapiro-Wilk test for CellArea of erythroblast:
+Statistic: 0.8185116978602601, p-value: 1.1449284521401585e-38
+
+Shapiro-Wilk test for CellArea of lymphocyte:
+Statistic: 0.9939477839062862, p-value: 7.712080009224108e-05
+
+Shapiro-Wilk test for CellArea of platelet:
+Statistic: 0.8676829626086515, p-value: 1.0343009388802989e-40
+
+Shapiro-Wilk test for Cell_perimeter of basophil:
+Statistic: 0.5408068997841917, p-value: 1.445892143925558e-48
+
+Shapiro-Wilk test for Cell_perimeter of neutrophil:
+Statistic: 0.4800211763663045, p-value: 1.990474732677411e-71
+
+Shapiro-Wilk test for Cell_perimeter of ig:
+Statistic: 0.4271246882770311, p-value: 3.421041393343431e-70
+
+Shapiro-Wilk test for Cell_perimeter of monocyte:
+Statistic: 0.35322091194050764, p-value: 3.3020199540012793e-57
+
+Shapiro-Wilk test for Cell_perimeter of eosinophil:
+Statistic: 0.4167963061982888, p-value: 3.103481502532173e-72
+
+Shapiro-Wilk test for Cell_perimeter of erythroblast:
+Statistic: 0.706714416584563, p-value: 7.94875885181521e-46
+
+Shapiro-Wilk test for Cell_perimeter of lymphocyte:
+Statistic: 0.7805001900278241, p-value: 1.6321085830009875e-37
+
+Shapiro-Wilk test for Cell_perimeter of platelet:
+Statistic: 0.8021509879977926, p-value: 6.358665998533583e-47
+
+Shapiro-Wilk test for cell_circularity of basophil:
+Statistic: 0.43718076769821534, p-value: 7.399118282495791e-52
+
+Shapiro-Wilk test for cell_circularity of neutrophil:
+Statistic: 0.38448316401962257, p-value: 7.316516075431303e-75
+
+Shapiro-Wilk test for cell_circularity of ig:
+Statistic: 0.294841849530847, p-value: 2.235329975463136e-74
+
+Shapiro-Wilk test for cell_circularity of monocyte:
+Statistic: 0.2109084612537715, p-value: 1.0074772478659265e-60
+
+Shapiro-Wilk test for cell_circularity of eosinophil:
+Statistic: 0.2879506950413392, p-value: 2.5369110583281642e-76
+
+Shapiro-Wilk test for cell_circularity of erythroblast:
+Statistic: 0.6414620856673777, p-value: 5.20557566725925e-49
+
+Shapiro-Wilk test for cell_circularity of lymphocyte:
+Statistic: 0.6996071255539478, p-value: 5.2403529303245987e-42
+
+Shapiro-Wilk test for cell_circularity of platelet:
+Statistic: 0.6273423764855228, p-value: 1.2596625933683793e-57
+
