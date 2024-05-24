@@ -1,5 +1,6 @@
 # main_script.py
-
+import os
+os.chdir('/Users/mehdienrahimi/apr24_bds_int_blood_cells/src')
 # Import everything from our custom imports module
 # Please add your libraries to the import module
 from utils.imports import *
@@ -9,34 +10,37 @@ from utils.data_loader import load_dataset_labels, load_images_with_labels
 # Please add any plot functions to the visualize module
 from visualization.visualize import (plot_image_distribution,
                                      display_sample_images,
-                                     create_interactive_bar_plot
+                                     create_interactive_bar_plot,
+                                     visualize_images,
+                                     dist_cell_area
                                      )
 # Please add any data analysis functions to data_analysis module
 from utils.data_analysis import (analyze_image_sizes,
                                  filter_images_by_size,
                                  count_images_by_label,
-                                 balance_data_by_downsampling
+                                 balance_data_by_downsampling,
+                                 segmentation_openCV,
                                  )
 
 
 # Define the path to the dataset
 # For me, PBC_dataset_normal_DIB is unzipped folder including 8 subfilders
-main_folder_path = ('/Path_to_dataset/PBC_dataset_normal_DIB')
+main_folder_path = ('/Users/mehdienrahimi/Desktop/DataScienceTests/Project/Dataset/PBC_dataset_normal_DIB')
 
-# Load dataset labels
-# Here, we can save the name of classes that we need them a lot
-labels = load_dataset_labels(main_folder_path)
-# print("Subfolder names (labels):", labels)
+# # Load dataset labels
+# # Here, we can save the name of classes that we need them a lot
+# labels = load_dataset_labels(main_folder_path)
+# # print("Subfolder names (labels):", labels)
 
-"""
-Note: We can see some variations in the number of images per class,
-which could potentially lead to issues of class imbalance in
-a machine learning context, particularly for models such as CNNs that are
-commonly used for image classification tasks.
-This can cause classification models to be biased towards the classes with
-a higher number of instances,  potentially leading to poor model performance,
-especially for the minority class.
-"""
+# """
+# Note: We can see some variations in the number of images per class,
+# which could potentially lead to issues of class imbalance in
+# a machine learning context, particularly for models such as CNNs that are
+# commonly used for image classification tasks.
+# This can cause classification models to be biased towards the classes with
+# a higher number of instances,  potentially leading to poor model performance,
+# especially for the minority class.
+# """
 
 # Load images and their counts
 images_with_labels, image_counts_df = load_images_with_labels(main_folder_path)
@@ -147,3 +151,9 @@ plot_image_distribution(
 # json_file_path = os.path.join(data_folder_path, 'balanced_image_paths.json')
 # df_images.to_json(json_file_path, orient='records')
 # ----------------------------------------------------------------------------
+
+### Image segmentation part
+df_segmentation, first_images = segmentation_openCV(main_folder_path)
+visualize_images(first_images, main_folder_path)
+dist_cell_area(df_segmentation)
+
