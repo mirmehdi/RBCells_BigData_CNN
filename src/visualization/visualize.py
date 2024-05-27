@@ -5,6 +5,7 @@ import os
 import plotly.express as px
 import cv2
 
+
 def plot_image_distribution(df, title, xlabel, ylabel):
     """
     Creates and displays a bar plot to visualize the distribution of image
@@ -217,7 +218,10 @@ def dist_cell_area(df_segmentation):
     plt.tight_layout()
 
     # Save the plot and display it
-    save_path = '/Users/mehdienrahimi/apr24_bds_int_blood_cells/src/outputs/CellMetricsDistribution_segmentationOpenCV.jpg'
+    save_dir = os.path.join('..', 'outputs')  # Adjust this path if necessary
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+    save_path = os.path.join(save_dir, 'CellMetricsDistribution_segmentationOpenCV.jpg')
     plt.savefig(save_path)
     plt.show()
 
