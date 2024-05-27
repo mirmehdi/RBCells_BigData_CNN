@@ -1,0 +1,32 @@
+name: Environment Update Workflow
+
+on:
+  push:
+    paths:
+      - 'environment.yml'
+  pull_request:
+    paths:
+      - 'environment.yml'
+
+jobs:
+  update-environment:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v2
+
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        activate-environment: bloodCNN
+        environment-file: environment.yml
+        python-version: 3.8
+        auto-activate-base: false
+
+    - name: Install dependencies
+      run: |
+        conda env update -f environment.yml
+        conda activate bloodCNN
+
+   
