@@ -2,7 +2,9 @@
 from PIL import Image
 import os
 import pandas as pd
-
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
 
 def analyze_image_sizes(labels, main_folder_path):
     """
@@ -204,3 +206,65 @@ def balance_data_by_downsampling(df, seed=1):
     balanced_df.reset_index(drop=True, inplace=True)
 
     return balanced_df
+
+
+def segmentation_openCV(main_folder_path, image_int_size=(360, 360), dataframe_path='data.csv'):
+    classes_dir = main_folder_path
+    image_sizes = []
+    cell_areas = []
+    cell_circularity = []
+    cell_perimeter = []
+    labels = []
+    first_images = {}  # Initialize the dictionary for first images
+    df = pd.DataFrame()  # Initialize DataFrame to avoid UnboundLocalError
+
+    try:
+        class_names = [d for d in os.listdir(classes_dir) if os.path.isdir(os.path.join(classes_dir, d)) and not d.startswith('.')]
+        for class_idx, class_name in enumerate(class_names):
+            class_dir = os.path.join(classes_dir, class_name)
+            image_files = [f for f in os.listdir(class_dir) if not f.startswith('.')]
+            for image_file in image_files:
+                image_path = os.path.join(class_dir, image_file)
+                try:
+                    img_gray = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+                    if img_gray is None:
+                        raise ValueError("Image couldn't be read")
+                    blurred = cv2.GaussianBlur(img_gray, (3, 3), 0)
+                    _, thresholded = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY_INV)
+                    contours, _ = cv2.findContours(thresholded, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+                    if contours:  # Check if any contours were detected
+                        # Find the largest contour based on area
+                        largest_contour = max(contours, key=cv2.contourArea)
+                        max_area = cv2.contourArea(largest_contour)
+                        perimeter = cv2.arcLength(largest_contour, True)
+                        circularity = (perimeter ** 2) / (4 * np.pi * max_area) if max_area != 0 else 0
+                    else:
+                        max_area = 0
+                        perimeter = 0
+                        circularity = 0
+                    labels.append(class_name)
+                    image_sizes.append(img_gray.size)
+                    cell_areas.append(max_area)
+                    cell_perimeter.append(perimeter)
+                    cell_circularity.append(circularity)
+
+                except Exception as e:
+                    print(f"Error processing {image_path}: {e}")
+
+        df = pd.DataFrame({
+            'Label': labels,
+            'ImageSize': image_sizes,
+            'CellArea': cell_areas,
+            'Cell_perimeter': cell_perimeter,
+            'cell_circularity': cell_circularity
+        })
+
+    except Exception as e:
+        print(f"Error loading data: {e}")
+
+    # Save DataFrame to CSV
+    save_path = '/Users/mehdienrahimi/apr24_bds_int_blood_cells/src/outputs/DataSet_segmentation_openCV.csv'
+    df.to_csv(save_path, index=False)
+
+    return df, first_images
