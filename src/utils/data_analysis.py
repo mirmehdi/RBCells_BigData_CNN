@@ -263,8 +263,12 @@ def segmentation_openCV(main_folder_path, image_int_size=(360, 360), dataframe_p
     except Exception as e:
         print(f"Error loading data: {e}")
 
-    # Save DataFrame to CSV
-    save_path = '/Users/mehdienrahimi/apr24_bds_int_blood_cells/src/outputs/DataSet_segmentation_openCV.csv'
+    # Save DataFrame to CSV in the specified directory
+    save_dir = os.path.join('..', 'data')
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+    save_path = os.path.join(save_dir, dataframe_path)
     df.to_csv(save_path, index=False)
 
     return df, first_images
+
