@@ -221,7 +221,7 @@ def dist_cell_area(df_segmentation):
     save_dir = os.path.join('..', 'outputs')  # Adjust this path if necessary
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
-    save_path = os.path.join(save_dir, 'CellMetricsDistribution_segmentationOpenCV.jpg')
+    save_path = os.path.join(save_dir, 'CellMetricsDistribution.jpg')
     plt.savefig(save_path)
     plt.show()
 
