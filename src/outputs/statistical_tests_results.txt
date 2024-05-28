@@ -1,0 +1,180 @@
+Kruskal-Wallis test for CellArea:
+Statistic: 12406.573507335728, p-value: 0.0
+Reject null hypothesis: Significant differences exist between groups.
+Kruskal-Wallis test for Cell_perimeter:
+Statistic: 914.0957825380142, p-value: 4.338381626905422e-193
+Reject null hypothesis: Significant differences exist between groups.
+Kruskal-Wallis test for cell_circularity:
+Statistic: 1888.955415940907, p-value: 0.0
+Reject null hypothesis: Significant differences exist between groups.
+Pairwise Mann-Whitney U tests for CellArea:
+basophil vs neutrophil: Statistic: 4032009.0, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+basophil vs ig: Statistic: 2145427.5, p-value: 3.9257843687981524e-28
+Reject null hypothesis: Significant difference between groups.
+basophil vs monocyte: Statistic: 740342.5, p-value: 1.7654540385339848e-10
+Reject null hypothesis: Significant difference between groups.
+basophil vs eosinophil: Statistic: 2713525.5, p-value: 2.21773080804378e-107
+Reject null hypothesis: Significant difference between groups.
+basophil vs erythroblast: Statistic: 1798928.0, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+basophil vs lymphocyte: Statistic: 1429605.0, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+basophil vs platelet: Statistic: 2859793.0, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+neutrophil vs ig: Statistic: 446751.5, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+neutrophil vs monocyte: Statistic: 12000.5, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+neutrophil vs eosinophil: Statistic: 1120255.5, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+neutrophil vs erythroblast: Statistic: 3875079.5, p-value: 2.9631649085066076e-175
+Reject null hypothesis: Significant difference between groups.
+neutrophil vs lymphocyte: Statistic: 787822.0, p-value: 5.30295468374264e-218
+Reject null hypothesis: Significant difference between groups.
+neutrophil vs platelet: Statistic: 7786210.5, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+ig vs monocyte: Statistic: 1417289.0, p-value: 7.411673335072234e-62
+Reject null hypothesis: Significant difference between groups.
+ig vs eosinophil: Statistic: 5416608.0, p-value: 2.8807336223312894e-41
+Reject null hypothesis: Significant difference between groups.
+ig vs erythroblast: Statistic: 4134999.0, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+ig vs lymphocyte: Statistic: 2937252.5, p-value: 1.5571371949541137e-253
+Reject null hypothesis: Significant difference between groups.
+ig vs platelet: Statistic: 6795160.0, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+monocyte vs eosinophil: Statistic: 3367951.0, p-value: 2.637908212714872e-175
+Reject null hypothesis: Significant difference between groups.
+monocyte vs erythroblast: Statistic: 2118431.0, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+monocyte vs lymphocyte: Statistic: 1704919.0, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+monocyte vs platelet: Statistic: 3334142.0, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+eosinophil vs erythroblast: Statistic: 4278167.5, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+eosinophil vs lymphocyte: Statistic: 2802487.5, p-value: 5.47439773681063e-134
+Reject null hypothesis: Significant difference between groups.
+eosinophil vs platelet: Statistic: 7309488.5, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+erythroblast vs lymphocyte: Statistic: 318017.0, p-value: 9.127697889789251e-197
+Reject null hypothesis: Significant difference between groups.
+erythroblast vs platelet: Statistic: 3527519.0, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+lymphocyte vs platelet: Statistic: 2846444.0, p-value: 0.0
+Reject null hypothesis: Significant difference between groups.
+Pairwise Mann-Whitney U tests for Cell_perimeter:
+basophil vs neutrophil: Statistic: 2567102.0, p-value: 3.195740769496651e-43
+Reject null hypothesis: Significant difference between groups.
+basophil vs ig: Statistic: 2061354.0, p-value: 9.213190598573352e-18
+Reject null hypothesis: Significant difference between groups.
+basophil vs monocyte: Statistic: 1069607.5, p-value: 7.993135751835816e-26
+Reject null hypothesis: Significant difference between groups.
+basophil vs eosinophil: Statistic: 2102431.5, p-value: 3.504025283308411e-08
+Reject null hypothesis: Significant difference between groups.
+basophil vs erythroblast: Statistic: 993437.0, p-value: 0.019204950344644783
+Fail to reject null hypothesis: No significant difference between groups.
+basophil vs lymphocyte: Statistic: 599684.0, p-value: 7.253115628307968e-16
+Reject null hypothesis: Significant difference between groups.
+basophil vs platelet: Statistic: 1309620.0, p-value: 3.6699445970078164e-05
+Reject null hypothesis: Significant difference between groups.
+neutrophil vs ig: Statistic: 4243218.0, p-value: 3.6948844437354544e-16
+Reject null hypothesis: Significant difference between groups.
+neutrophil vs monocyte: Statistic: 2221435.5, p-value: 0.000999177903496576
+Fail to reject null hypothesis: No significant difference between groups.
+neutrophil vs eosinophil: Statistic: 4212003.5, p-value: 3.977993847941332e-39
+Reject null hypothesis: Significant difference between groups.
+neutrophil vs erythroblast: Statistic: 2094266.0, p-value: 1.7746067110536047e-26
+Reject null hypothesis: Significant difference between groups.
+neutrophil vs lymphocyte: Statistic: 1213341.0, p-value: 8.144738844906403e-95
+Reject null hypothesis: Significant difference between groups.
+neutrophil vs platelet: Statistic: 2721201.5, p-value: 5.476674532098145e-85
+Reject null hypothesis: Significant difference between groups.
+ig vs monocyte: Statistic: 2197167.5, p-value: 0.00022609199165872339
+Reject null hypothesis: Significant difference between groups.
+ig vs eosinophil: Statistic: 4192022.0, p-value: 1.9516120818090115e-06
+Reject null hypothesis: Significant difference between groups.
+ig vs erythroblast: Statistic: 2009464.0, p-value: 7.505083379606013e-09
+Reject null hypothesis: Significant difference between groups.
+ig vs lymphocyte: Statistic: 1141138.0, p-value: 1.313448483051878e-70
+Reject null hypothesis: Significant difference between groups.
+ig vs platelet: Statistic: 2562978.5, p-value: 4.114901266715078e-53
+Reject null hypothesis: Significant difference between groups.
+monocyte vs eosinophil: Statistic: 1895000.5, p-value: 7.389555687718493e-15
+Reject null hypothesis: Significant difference between groups.
+monocyte vs erythroblast: Statistic: 918116.0, p-value: 4.3384346222375485e-15
+Reject null hypothesis: Significant difference between groups.
+monocyte vs lymphocyte: Statistic: 506661.0, p-value: 1.5106301066297944e-74
+Reject null hypothesis: Significant difference between groups.
+monocyte vs platelet: Statistic: 1145451.0, p-value: 1.6936408443512363e-58
+Reject null hypothesis: Significant difference between groups.
+eosinophil vs erythroblast: Statistic: 2305280.0, p-value: 0.009815365361738321
+Fail to reject null hypothesis: No significant difference between groups.
+eosinophil vs lymphocyte: Statistic: 1314321.0, p-value: 4.277586776757175e-55
+Reject null hypothesis: Significant difference between groups.
+eosinophil vs platelet: Statistic: 2933511.0, p-value: 2.9119776493173984e-36
+Reject null hypothesis: Significant difference between groups.
+erythroblast vs lymphocyte: Statistic: 720348.0, p-value: 2.4950311875309473e-26
+Reject null hypothesis: Significant difference between groups.
+erythroblast vs platelet: Statistic: 1718258.0, p-value: 0.002847410632171955
+Fail to reject null hypothesis: No significant difference between groups.
+lymphocyte vs platelet: Statistic: 1691871.5, p-value: 4.874664323964979e-20
+Reject null hypothesis: Significant difference between groups.
+Pairwise Mann-Whitney U tests for cell_circularity:
+basophil vs neutrophil: Statistic: 2340692.0, p-value: 1.2698769208030742e-15
+Reject null hypothesis: Significant difference between groups.
+basophil vs ig: Statistic: 2036827.5, p-value: 3.3880428563792775e-15
+Reject null hypothesis: Significant difference between groups.
+basophil vs monocyte: Statistic: 1077105.0, p-value: 1.303262328234962e-27
+Reject null hypothesis: Significant difference between groups.
+basophil vs eosinophil: Statistic: 2018218.0, p-value: 0.0011981939623681099
+Fail to reject null hypothesis: No significant difference between groups.
+basophil vs erythroblast: Statistic: 865057.0, p-value: 0.00014016901724368436
+Reject null hypothesis: Significant difference between groups.
+basophil vs lymphocyte: Statistic: 551000.0, p-value: 1.4779650815619046e-27
+Reject null hypothesis: Significant difference between groups.
+basophil vs platelet: Statistic: 895856.0, p-value: 5.764693700131929e-75
+Reject null hypothesis: Significant difference between groups.
+neutrophil vs ig: Statistic: 4737017.5, p-value: 0.2475775499988221
+Fail to reject null hypothesis: No significant difference between groups.
+neutrophil vs monocyte: Statistic: 2521936.5, p-value: 0.00024923891706190237
+Reject null hypothesis: Significant difference between groups.
+neutrophil vs eosinophil: Statistic: 4601554.5, p-value: 3.816665985276991e-15
+Reject null hypothesis: Significant difference between groups.
+neutrophil vs erythroblast: Statistic: 1993917.5, p-value: 1.066760552837264e-37
+Reject null hypothesis: Significant difference between groups.
+neutrophil vs lymphocyte: Statistic: 1284536.5, p-value: 4.4494926029274383e-79
+Reject null hypothesis: Significant difference between groups.
+neutrophil vs platelet: Statistic: 2055181.5, p-value: 4.1804813515126776e-204
+Reject null hypothesis: Significant difference between groups.
+ig vs monocyte: Statistic: 2252994.5, p-value: 2.76437396959747e-07
+Reject null hypothesis: Significant difference between groups.
+ig vs eosinophil: Statistic: 4048714.5, p-value: 5.626421829862438e-12
+Reject null hypothesis: Significant difference between groups.
+ig vs erythroblast: Statistic: 1708649.5, p-value: 1.6132622971210534e-39
+Reject null hypothesis: Significant difference between groups.
+ig vs lymphocyte: Statistic: 1040191.5, p-value: 6.235563268937336e-95
+Reject null hypothesis: Significant difference between groups.
+ig vs platelet: Statistic: 1620834.5, p-value: 1.6977311805511794e-233
+Reject null hypothesis: Significant difference between groups.
+monocyte vs eosinophil: Statistic: 1765141.0, p-value: 6.633008012550095e-28
+Reject null hypothesis: Significant difference between groups.
+monocyte vs erythroblast: Statistic: 750857.0, p-value: 6.756865615837014e-51
+Reject null hypothesis: Significant difference between groups.
+monocyte vs lymphocyte: Statistic: 447704.0, p-value: 1.2981306722366136e-100
+Reject null hypothesis: Significant difference between groups.
+monocyte vs platelet: Statistic: 682188.5, p-value: 1.615903659177703e-203
+Reject null hypothesis: Significant difference between groups.
+eosinophil vs erythroblast: Statistic: 2033667.5, p-value: 9.12497930518369e-19
+Reject null hypothesis: Significant difference between groups.
+eosinophil vs lymphocyte: Statistic: 1250625.0, p-value: 1.8010427745541004e-67
+Reject null hypothesis: Significant difference between groups.
+eosinophil vs platelet: Statistic: 1945036.0, p-value: 8.957836122320974e-194
+Reject null hypothesis: Significant difference between groups.
+erythroblast vs lymphocyte: Statistic: 785701.0, p-value: 7.57367609032497e-14
+Reject null hypothesis: Significant difference between groups.
+erythroblast vs platelet: Statistic: 1351954.0, p-value: 2.559084932777818e-42
+Reject null hypothesis: Significant difference between groups.
+lymphocyte vs platelet: Statistic: 1284146.0, p-value: 1.2335624124467647e-06
+Reject null hypothesis: Significant difference between groups.
