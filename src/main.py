@@ -1,6 +1,22 @@
 # main_script.py
+# %%
+'''
+Here we get a path where this script located. It will be our base path and the rest will be relative path
+'''
 import os
-os.chdir('/Users/mehdienrahimi/apr24_bds_int_blood_cells/src')
+import inspect
+
+# Fallback mechanism to get the directory when __file__ is not defined
+try:
+    # This will work when running as a script
+    script_directory = os.path.dirname(os.path.abspath(__file__))
+except NameError:
+    # This will work in an interactive environment
+    script_directory = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+
+
+print(script_directory)
+# %%
 # Import everything from our custom imports module
 # Please add your libraries to the import module
 from utils.imports import *
