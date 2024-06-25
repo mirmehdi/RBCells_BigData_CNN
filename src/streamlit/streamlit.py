@@ -55,13 +55,39 @@ if page == "Preliminary analysis":
         - Lymphocytes and Basophils have the lowest number of images, with 1214 and 1218 images, respectively.
         """)
     image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'distribution_image_classes.png')) 
-    st.image(image, caption='Leukopy - Blood Cell Classifier', use_column_width=True)
+    st.image(image, caption='Cell Classes', use_column_width=True)
 
-    st.header("DataSet_numbers")
+    st.header("Image size")
     st.write("""
         Distribution of Image size
         """)
     image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Image_sizes.jpg')) 
-    st.image(image, caption='Leukopy - Blood Cell Classifier', use_column_width=True)
+    st.image(image, caption='Image Size Distribution', use_column_width=True)
 
     
+    ################################################### Preliminary analysis
+
+if page == "Modelling":
+
+    st.write("### Select you model of segmentation")
+
+    if st.checkbox("### Unet Segmentation"):
+        st.header("Unet ALgorith")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Unet.jpg')) 
+        st.image(image, caption='Unet segmentatoin Algorithm', use_column_width=True)
+
+
+        st.header("sample of Unet Binary segmentation")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Unet_seg_sample_S1.jpg')) 
+        st.image(image, caption='A sample of Unet Segmentation: on left we see an original image in grayscale, in middle we see a true segmentation, and right side is the predicted binary segmentation',
+         use_column_width=True)
+
+        st.header("Artifact removal")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Unet.jpg')) 
+        st.image(image, caption='Unet segmentatoin Algorithm', use_column_width=True)
+
+
+
+
+    
+   
