@@ -12,7 +12,7 @@ current_dir = os.getcwd()
 ################################################### Preliminary analysis
 st.title("Leukopy 🩸 - blood cell classifier")
 st.sidebar.title("Navigation")
-pages=["Home", "Preliminary analysis","Statistical Analysis", "Modelling", "Prediction & Evaluation", "Perspectives"]
+pages=["Home", "Preliminary analysis","Statistical Analysis", "Modelling", "Classification with Transfer learning", "Perspectives"]
 page=st.sidebar.radio("Go to", pages)
 
 # Home page
@@ -65,9 +65,9 @@ if page == "Preliminary analysis":
     st.image(image, caption='Image Size Distribution', use_column_width=True)
 
     
-    ################################################### Preliminary analysis
+    ################################################### Segmentation
 
-if page == "Modelling":
+if page == "Segmentation":
 
     st.write("### Select you model of segmentation")
 
@@ -83,11 +83,36 @@ if page == "Modelling":
          use_column_width=True)
 
         st.header("Artifact removal")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Unet.jpg')) 
-        st.image(image, caption='Unet segmentatoin Algorithm', use_column_width=True)
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'artifact_removal.jpg')) 
+        st.image(image, caption='delete regions with smaller sizes', use_column_width=True)
+
+        st.header("Image with Multiple cell recognition as bad images")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Multicell_recog.jpg')) 
+        st.image(image, caption='Consider images with mor than one big regions as bad image', use_column_width=True)
+
+        st.header("Detect Ouliers")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Outliers_cells.jpg')) 
+        st.image(image, caption='The outliers are cell type which has area more than three standard deviation from the mean of the cell area at each group ', use_column_width=True)
+
+        st.header("Ouliers are Abnormal Cells")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'deadcells_oulier.jpg')) 
+        st.image(image, caption='The outliers are abnormal cells and we do not want to classify them', use_column_width=True)
 
 
 
+##
 
-    
+    if st.checkbox("### Normalization as segmentation method"):
+        st.header("Unet ALgorith")
    
+
+ ################################################### Segmentation
+
+if page == "Classification with Transfer learning":
+    st.header("Classification with Transfer Learning")
+
+    model_options = [ "VGG16", "EfficientNetB0"]
+    selected_model = st.selectbox("Select the pre-trained model for transfer learning:", model_options)
+
+    st.write(f"You selected: {selected_model}")
+    st.write("Add your classification implementation here for the selected model.")

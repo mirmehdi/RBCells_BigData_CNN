@@ -1,0 +1,3 @@
+Metric,Training,Validation
+Loss,0.0228,0.241
+Accuracy,0.8867,0.8983
