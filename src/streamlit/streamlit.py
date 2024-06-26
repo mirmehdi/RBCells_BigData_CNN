@@ -106,13 +106,35 @@ if page == "Segmentation":
         st.header("Unet ALgorith")
    
 
- ################################################### Segmentation
+ ################################################### Classificatoin 
 
 if page == "Classification with Transfer learning":
     st.header("Classification with Transfer Learning")
 
-    model_options = [ "VGG16", "EfficientNetB0"]
+    model_options = ["EfficientNetB0", "VGG16"]
     selected_model = st.selectbox("Select the pre-trained model for transfer learning:", model_options)
 
     st.write(f"You selected: {selected_model}")
     st.write("Add your classification implementation here for the selected model.")
+
+
+    if selected_model == "EfficientNetB0":
+
+        cls_report = pd.read_csv(os.path.join(current_dir, os.pardir, 'outputs', 'classification_report_unet_seg.csv')) 
+        st.header(" Transfer learning with EfficientNetB0")
+        st.header("Classification report")
+        st.dataframe(cls_report)
+
+        st.header("Heatmap presentation")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'heat_map_cls_Unet_seg_efficientnetB0.png')) 
+        st.image(image, caption='Heat map presentation', use_column_width=True)
+
+        st.header("Loss of EfficientNetB0 model")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Loss_Curve_EfficientNetB0.png')) 
+        st.image(image, caption='Loss  of EfficientNetB0 model', use_column_width=True)
+
+        st.header("Accuracy of EfficientNetB0 model")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Accuracy_Curve_EfficientNetB0.png')) 
+        st.image(image, caption='accuracy of EfficientNetB0 model', use_column_width=True)
+
+
