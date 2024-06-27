@@ -1,0 +1,76 @@
+First few rows of the DataFrame:
+   Label                                         Image_Path  White_Area
+0      5  /content/drive/MyDrive/unet/filtered_masks_tes...        7574
+1      5  /content/drive/MyDrive/unet/filtered_masks_tes...        9600
+2      5  /content/drive/MyDrive/unet/filtered_masks_tes...       12635
+3      5  /content/drive/MyDrive/unet/filtered_masks_tes...       11017
+4      5  /content/drive/MyDrive/unet/filtered_masks_tes...       11266
+
+Saved White_Area_distribution.png
+
+Shapiro-Wilk test results for normality:
+Shapiro-Wilk test for White_Area of 5:
+Statistic: 0.9661563108906241, p-value: 2.7353084755382247e-19
+
+Shapiro-Wilk test for White_Area of 6:
+Statistic: 0.9918364780924096, p-value: 7.052537633453366e-07
+
+Shapiro-Wilk test for White_Area of 4:
+Statistic: 0.9877000915483605, p-value: 1.3996537312212788e-15
+
+Shapiro-Wilk test for White_Area of 7:
+Statistic: 0.9043152172753289, p-value: 1.904880011676996e-35
+
+Shapiro-Wilk test for White_Area of 0:
+Statistic: 0.9884701423442666, p-value: 6.322259299961319e-08
+
+Shapiro-Wilk test for White_Area of 1:
+Statistic: 0.9735974346075107, p-value: 1.5461206781351504e-15
+
+Shapiro-Wilk test for White_Area of 3:
+Statistic: 0.987870484803829, p-value: 2.0556900423944804e-10
+
+Shapiro-Wilk test for White_Area of 2:
+Statistic: 0.9872800592555107, p-value: 1.823596017512018e-08
+
+Anderson-Darling test results for normality:
+Anderson-Darling test for White_Area of 5:
+Statistic: 15.388524040430184, critical values: [0.575 0.654 0.785 0.916 1.089], significance levels: [15.  10.   5.   2.5  1. ]
+
+Anderson-Darling test for White_Area of 6:
+Statistic: 2.545287500338418, critical values: [0.574 0.654 0.785 0.915 1.089], significance levels: [15.  10.   5.   2.5  1. ]
+
+Anderson-Darling test for White_Area of 4:
+Statistic: 10.039979596327612, critical values: [0.575 0.655 0.786 0.917 1.091], significance levels: [15.  10.   5.   2.5  1. ]
+
+Anderson-Darling test for White_Area of 7:
+Statistic: 67.7605077371245, critical values: [0.575 0.655 0.786 0.916 1.09 ], significance levels: [15.  10.   5.   2.5  1. ]
+
+Anderson-Darling test for White_Area of 0:
+Statistic: 3.135701566317266, critical values: [0.574 0.654 0.784 0.915 1.088], significance levels: [15.  10.   5.   2.5  1. ]
+
+Anderson-Darling test for White_Area of 1:
+Statistic: 8.48487535005097, critical values: [0.574 0.654 0.785 0.915 1.089], significance levels: [15.  10.   5.   2.5  1. ]
+
+Anderson-Darling test for White_Area of 3:
+Statistic: 5.162648370372608, critical values: [0.575 0.654 0.785 0.916 1.089], significance levels: [15.  10.   5.   2.5  1. ]
+
+Anderson-Darling test for White_Area of 2:
+Statistic: 4.028353772818264, critical values: [0.574 0.654 0.784 0.915 1.088], significance levels: [15.  10.   5.   2.5  1. ]
+
+Saved Q-Q plot for White_Area of 5
+
+Saved Q-Q plot for White_Area of 6
+
+Saved Q-Q plot for White_Area of 4
+
+Saved Q-Q plot for White_Area of 7
+
+Saved Q-Q plot for White_Area of 0
+
+Saved Q-Q plot for White_Area of 1
+
+Saved Q-Q plot for White_Area of 3
+
+Saved Q-Q plot for White_Area of 2
+
