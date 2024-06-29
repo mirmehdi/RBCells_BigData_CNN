@@ -239,97 +239,39 @@ if page == "Statistical Analysis":
    
 
  ################################################### Classificatoin 
-
-if page == "Classification with Transfer learning":
-    st.header("Classification with Transfer Learning")
-
-    model_options = ["CNN_masked_VGG16","EfficientNetB0", "CNN_unmasked_VGG16"]
-    selected_model = st.selectbox("Select the pre-trained model for transfer learning:", model_options)
-
-    st.write(f"You selected: {selected_model}")
-    st.write("Add your classification implementation here for the selected model.")
-
-
-    if selected_model == "EfficientNetB0":
-
-        cls_report = pd.read_csv(os.path.join(current_dir, os.pardir, 'outputs', 'classification_report_unet_seg.csv')) 
-        st.header(" Transfer learning with EfficientNetB0")
-        st.header("Algorithm")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'efficient.png')) 
-        st.image(image, caption='EfficientNetB0 Algorithm', use_column_width=True)
-        
-
-        st.header(" Transfer learning with EfficientNetB0")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'cls_report_eff.png')) 
-        st.image(image, caption='Classification report', use_column_width=True)
-
-
-        st.header("Heatmap presentation")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'heat_map_cls_Unet_seg_efficientnetB0.png')) 
-        st.image(image, caption='Heat map presentation', use_column_width=True)
-
-        st.header("Loss of EfficientNetB0 model")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Loss_Curve_EfficientNetB0.png')) 
-        st.image(image, caption='Loss  of EfficientNetB0 model', use_column_width=True)
-
-        st.header("Accuracy of EfficientNetB0 model")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Accuracy_Curve_EfficientNetB0.png')) 
-        st.image(image, caption='accuracy of EfficientNetB0 model', use_column_width=True)
-
-
-    if selected_model == "CNN_masked_VGG16":
-
-        st.header(" Transfer learning with VGG16")
-        st.header("Algorithm")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'vgg.png')) 
-        st.image(image, caption='VGG16 Algorithm', use_column_width=True)
-
-        st.header("Classification report")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'screenshot_2024-06-27_at_17.33.21_720.png')) 
-        st.image(image, caption='', use_column_width=True)
-
-        st.header("Heatmap presentation")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'cm_masked_vgg16.png')) 
-        st.image(image, caption='Heat map presentation', use_column_width=True)
-
-        st.header("Heatmap presentation")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'train_loss_plots_vgg16.png')) 
-        st.image(image, caption='Heat map presentation', use_column_width=True)
-
-
-    if selected_model == "CNN_unmasked_VGG16":
-
-
-        st.header(" Transfer learning with VGG16")
-        st.header("Algorithm")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'vgg.png')) 
-        st.image(image, caption='VGG16 Algorithm', use_column_width=True)
-
-        st.header("Classification report")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'screenshot_2024-06-27_at_17.34.32.png')) 
-        st.image(image, caption='', use_column_width=True)
-
-        st.header("Heatmap presentation")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'cm_unmasked_vgg16.png')) 
-        st.image(image, caption='Heat map presentation', use_column_width=True)
-
-        st.header("Loss_accuracy")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'train_loss_plots_vgg16_unmasked_720.png')) 
-        st.image(image, caption='', use_column_width=True)
-
-
-
-############################## "Interactive Test"
 if page == "Interactive Test":
-
     import streamlit as st
     import tensorflow as tf
+    from tensorflow.keras.models import load_model
+    from tensorflow.keras.applications import EfficientNetB0
+    from tensorflow.keras.layers import GlobalAveragePooling2D, Dense
+    from tensorflow.keras.models import Model
     import numpy as np
     import cv2
-    from PIL import Image
     import os
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    from PIL import Image
 
-    # Define cell type mapping
+    st.title("Interactive Test with Transfer Learning")
+
+    # Function to define and build the model architecture
+    def build_model(num_classes):
+        base_model = EfficientNetB0(weights='imagenet', include_top=False, input_shape=(256, 256, 3))
+        x = base_model.output
+        x = GlobalAveragePooling2D()(x)
+        x = Dense(512, activation='relu')(x)
+        predictions = Dense(num_classes, activation='softmax')(x)
+        model = Model(inputs=base_model.input, outputs=predictions)
+        return model
+
+    # Load the pre-trained model
+    def load_model_with_weights(model_path, num_classes):
+        model = build_model(num_classes)
+        model.load_weights(model_path)
+        return model
+
+    # Define cell type mapping - ensure this matches the training data
     cell_type_mapping = {
         0: 'BA',
         1: 'ERB',
@@ -338,55 +280,75 @@ if page == "Interactive Test":
         4: 'EO',
         5: 'PMY',
         6: 'MO',
-        7: 'PLATELET'
+        7: 'PLATELET',
+        8: 'UNKNOWN'  # Add an additional class to match the model's expectation
     }
 
-    import tensorflow as tf
-    from tensorflow.keras.models import load_model
+    num_classes = len(cell_type_mapping)
 
-    # Load the .h5 model
-    model_path = os.path.join(current_dir, os.pardir, 'models', 'efficientnet_model.keras')
-    model = tf.keras.models.load_model(model_path)
+    # Get the current directory
+    current_dir = os.getcwd()
+    st.write("Current Directory:", current_dir)
 
-    # Helper function to preprocess the image
-    def preprocess_image(image_array):
-        image_array = tf.keras.applications.efficientnet.preprocess_input(image_array)
-        image_array = np.expand_dims(image_array, axis=0)  # Add batch dimension
-        return image_array
+    # Adjust these paths to your directory structure
+    model_path = os.path.join(current_dir, os.pardir, 'models', 'efficientnet_model.h5')
+    clean_data_path = os.path.join(current_dir, os.pardir, 'data', 'clean_data.csv')
 
-    # Helper function to predict the class of the image
-    def predict(image_array):
-        processed_image = preprocess_image(image_array)
-        predictions = model.predict(processed_image)
+    # Print paths for debugging
+    st.write("Model Path:", model_path)
+    st.write("Clean Data Path:", clean_data_path)
+
+    # Load the model
+    try:
+        model = load_model_with_weights(model_path, num_classes)
+        st.write("Model loaded successfully.")
+    except Exception as e:
+        st.write(f"Error loading model: {str(e)}")
+
+    # Load clean_data DataFrame
+    try:
+        clean_data = pd.read_csv(clean_data_path)
+        st.write("Clean data loaded successfully.")
+    except Exception as e:
+        st.write(f"Error loading clean data: {str(e)}")
+
+    # Function to preprocess the image
+    def preprocess_image(image):
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # Convert from BGR to RGB
+        image = cv2.resize(image, (256, 256))  # Resize to 256x256
+        image = np.expand_dims(image, axis=0)  # Add batch dimension
+        image = tf.keras.applications.efficientnet.preprocess_input(image)  # Preprocess image
+        return image
+
+    # Function to predict the class of the image
+    def predict(image):
+        predictions = model.predict(image)
         predicted_class = np.argmax(predictions, axis=1)[0]
         confidence = np.max(predictions)
         return cell_type_mapping[predicted_class], confidence
 
-    # Streamlit app
-    st.title("Cell Type Classification")
-
-    st.write("""
-    Upload a combined image and the model will classify it into one of the cell types.
-    """)
-
-    uploaded_file = st.file_uploader("Choose a combined image...", type=["jpg", "jpeg", "png"])
+    # File uploader for user to upload an image
+    uploaded_file = st.file_uploader("Choose an image...", type="jpg")
 
     if uploaded_file is not None:
-        # Load the image
-        image = Image.open(uploaded_file)
-        image_array = np.array(image)
-        
-        if image_array.shape[-1] == 4:  # Check for alpha channel and remove it
-            image_array = image_array[..., :3]
-        
-        st.image(image, caption='Uploaded Combined Image', use_column_width=True)
-        st.write("")
-        st.write("Classifying...")
+        # Read the uploaded image
+        file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
+        image = cv2.imdecode(file_bytes, 1)
 
-        # Predict the class of the image
-        predicted_class, confidence = predict(image_array)
+        # Display the uploaded image
+        st.image(image, caption='Uploaded Image', use_column_width=True)
 
-        st.write(f"Predicted Class: {predicted_class}")
-        st.write(f"Confidence: {confidence * 100:.2f}%")
+        # Preprocess and predict the class of the uploaded image
+        try:
+            processed_image = preprocess_image(image)
+            predicted_class, confidence = predict(processed_image)
+            st.write(f"Predicted Class: {predicted_class}")
+            st.write(f"Confidence: {confidence * 100:.2f}%")
 
-    
+            fig, ax = plt.subplots(figsize=(8, 8))
+            ax.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+            ax.set_title(f"Predicted Label: {predicted_class}\nConfidence: {confidence * 100:.2f}%")
+            ax.axis('off')
+            st.pyplot(fig)
+        except Exception as e:
+            st.write(f"Error: {str(e)}")
