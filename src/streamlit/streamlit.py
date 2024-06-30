@@ -56,7 +56,7 @@ if page == "Home":
 if page == "Preliminary analysis":
 
     # explainatoin about figures
-    st.header("DataSet_numbers")
+    st.header("DataSet Study")
     st.write("""
         - The dataset is imbalanced, with some classes having significantly more images than others.
         - Neutrophils and Eosinophils have the highest number of images, with 3330 and 3117 images, respectively.
@@ -101,7 +101,31 @@ if page == "Preliminary analysis":
 
 if page == "Segmentation":
 
-    st.write("### Select you model of segmentation")
+    st.write("### Model of Segmentation")
+
+
+    if st.checkbox("### Thresholding-based segmentation"):
+            if st.checkbox("### Details"):
+                st.header("Thresholding Approach")
+                st.write("""
+                    - Thresholding Approach:
+                        - Aim: Distinguish cells from the background using contrast stretching and colour masking techniques.
+                    -Steps:
+                        - Images in both RGB --> normalized to Grayscale --> contrast streching --> color mask 
+                    - Advantages:
+                        - Simplicity: Easy to implement and computationally efficient.
+                        - Speed: Processes images quickly, making it suitable for applications requiring rapid results.
+                    - Limitations:
+                        - Accuracy: Struggles with complex images where cell boundaries are not well-defined.
+                        - Generalisation: May not perform well on varied datasets with different lighting and staining conditions.
+
+                    """)
+            
+            st.header("Output for threshold segmentation")
+            image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'masked_img_normalization.png')) 
+            st.image(image, caption='Output for threshold segmentation', use_column_width=True)
+
+                
 
     if st.checkbox("### Image segmentation with UNet"):
         if st.checkbox("### Details"):
@@ -117,7 +141,7 @@ if page == "Segmentation":
                     - Developed a UNet model (manually)
                     - Trained model on 0.9 of data and validated on 0.1 of 350 images
                 
-                - **further step for artifact removal**: 
+                - **Further Steps for Artifact removal**: 
                     - label connected regions
                     - find largest regions
                         - remove the region if the size is small 
@@ -141,7 +165,7 @@ if page == "Segmentation":
         st.image(image, caption='Unet segmentatoin Algorithm', use_column_width=True)
 
 
-        st.header("sample of Unet Binary segmentation")
+        st.header("Sample of Unet binary segmentation")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Unet_seg_sample_S1.jpg')) 
         st.image(image, caption='A sample of Unet Segmentation: on left we see an original image in grayscale, in middle we see a true segmentation, and right side is the predicted binary segmentation',
          use_column_width=True)
@@ -150,40 +174,19 @@ if page == "Segmentation":
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'artifact_removal.jpg')) 
         st.image(image, caption='delete regions with smaller sizes', use_column_width=True)
 
-        st.header("Image with Multiple cell recognition as bad images")
+        st.header("Image with Multiple cell recognized as bad images")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Multicell_recog.jpg')) 
         st.image(image, caption='Consider images with mor than one big regions as bad image', use_column_width=True)
 
-        st.header("Detect Ouliers")
+        st.header("Detect ouliers")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Outliers_cells.jpg')) 
         st.image(image, caption='The outliers are cell type which has area more than three standard deviation from the mean of the cell area at each group ', use_column_width=True)
 
-        st.header("Ouliers are Abnormal Cells")
+        st.header("Ouliers are Abnormal cells")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'deadcells_oulier.jpg')) 
         st.image(image, caption='The outliers are abnormal cells and we do not want to classify them', use_column_width=True)
 
-    if st.checkbox("### Thresholding-based segmentation"):
-        if st.checkbox("### Details"):
-            st.header("Thresholding Approach")
-            st.write("""
-                - Thresholding Approach:
-                    - Aim: Distinguish cells from the background using contrast stretching and colour masking techniques.
-                -Steps:
-                    - Images in both RGB --> normalized to Grayscale --> contrast streching --> color mask 
-                - Advantages:
-                    - Simplicity: Easy to implement and computationally efficient.
-                    - Speed: Processes images quickly, making it suitable for applications requiring rapid results.
-                - Limitations:
-                    - Accuracy: Struggles with complex images where cell boundaries are not well-defined.
-                    - Generalisation: May not perform well on varied datasets with different lighting and staining conditions.
-
-                """)
-        
-        st.header("Output for threshold segmentation")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'masked_img_normalization.png')) 
-        st.image(image, caption='Output for threshold segmentation', use_column_width=True)
-
-        
+   
 
 
 
@@ -195,10 +198,10 @@ if page == "Segmentation":
 
 if page == "Statistical Analysis":
     # unet seg
-    st.write("### Select you model of segmentation")
+    st.write("### Statistical Analysis based on Segmentation Model")
 
     if st.checkbox("### Based on Image segmentation with UNet"):
-        st.header("Ouliers are Abnormal Cells")
+        st.header("Cell area ditribution")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs','stats_UNet_masks', 'White_Area_distribution.png')) 
         st.image(image, caption='The distribution of cell area based on Unet model', use_column_width=True)
 
@@ -212,18 +215,14 @@ if page == "Statistical Analysis":
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs','stats_UNet_masks', 'White_Area_violinplot.png')) 
         st.image(image, caption=' Violin plots of cell area from the different cell types', use_column_width=True)
 
-        st.header("Ouliers are Abnormal Cells")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs','stats_threshold_masks', 'Mask_Area_distribution.png')) 
-        st.image(image, caption='The distribution of cell area based on Unet model', use_column_width=True)
-
 
 
 
     # normalization seg.
     if st.checkbox("### Based on Thresholding-based segmentation"):
-        st.header("Ouliers are Abnormal Cells")
+        st.header("Cell area distribution")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs','stats_threshold_masks', 'Mask_Area_distribution.png')) 
-        st.image(image, caption='The distribution of cell area based on Unet model', use_column_width=True)
+        st.image(image, caption='The distribution of cell area based on Thresholding model', use_column_width=True)
 
       
         st.header("Significance matrix")
@@ -239,6 +238,87 @@ if page == "Statistical Analysis":
    
 
  ################################################### Classificatoin 
+
+if page == "Classification with Transfer learning":
+    st.header("Classification with Transfer Learning")
+
+    model_options = ["CNN_masked_VGG16","EfficientNetB0", "CNN_unmasked_VGG16"]
+    selected_model = st.selectbox("Select the pre-trained model for transfer learning:", model_options)
+
+    st.write(f"You selected: {selected_model}")
+    st.write("Add your classification implementation here for the selected model.")
+
+
+    if selected_model == "EfficientNetB0":
+
+        cls_report = pd.read_csv(os.path.join(current_dir, os.pardir, 'outputs', 'classification_report_unet_seg.csv')) 
+        st.header(" Transfer learning with EfficientNetB0")
+        st.header("Algorithm")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'efficient.png')) 
+        st.image(image, caption='EfficientNetB0 Algorithm', use_column_width=True)
+        
+
+        st.header(" Transfer learning with EfficientNetB0")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'cls_report_eff.png')) 
+        st.image(image, caption='Classification report', use_column_width=True)
+
+
+        st.header("Heatmap presentation")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'heat_map_cls_Unet_seg_efficientnetB0.png')) 
+        st.image(image, caption='Heat map presentation', use_column_width=True)
+
+        st.header("Loss of EfficientNetB0 model")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Loss_Curve_EfficientNetB0.png')) 
+        st.image(image, caption='Loss  of EfficientNetB0 model', use_column_width=True)
+
+        st.header("Accuracy of EfficientNetB0 model")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Accuracy_Curve_EfficientNetB0.png')) 
+        st.image(image, caption='accuracy of EfficientNetB0 model', use_column_width=True)
+
+
+    if selected_model == "CNN_masked_VGG16":
+
+        st.header(" Transfer learning with VGG16")
+        st.header("Algorithm")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'vgg.png')) 
+        st.image(image, caption='VGG16 Algorithm', use_column_width=True)
+
+        st.header("Classification report")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'screenshot_2024-06-27_at_17.33.21_720.png')) 
+        st.image(image, caption='', use_column_width=True)
+
+        st.header("Heatmap presentation")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'cm_masked_vgg16.png')) 
+        st.image(image, caption='Heat map presentation', use_column_width=True)
+
+        st.header("Heatmap presentation")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'train_loss_plots_vgg16.png')) 
+        st.image(image, caption='Heat map presentation', use_column_width=True)
+
+
+    if selected_model == "CNN_unmasked_VGG16":
+
+
+        st.header(" Transfer learning with VGG16")
+        st.header("Algorithm")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'vgg.png')) 
+        st.image(image, caption='VGG16 Algorithm', use_column_width=True)
+
+        st.header("Classification report")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'screenshot_2024-06-27_at_17.34.32.png')) 
+        st.image(image, caption='', use_column_width=True)
+
+        st.header("Heatmap presentation")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'cm_unmasked_vgg16.png')) 
+        st.image(image, caption='Heat map presentation', use_column_width=True)
+
+        st.header("Loss_accuracy")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'train_loss_plots_vgg16_unmasked_720.png')) 
+        st.image(image, caption='', use_column_width=True)
+
+##############################  Interactive Test
+
+
 if page == "Interactive Test":
     import streamlit as st
     import tensorflow as tf
