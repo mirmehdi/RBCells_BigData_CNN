@@ -491,6 +491,10 @@ if page == "Future Directions":
        -  Utilizes convolutional neural networks, particularly U-Net for segmentation and pre-trained models for feature extraction.
        -  Enhances accuracy and efficiency in haematological diagnostics, addressing challenges of manual inspection.
     """)
+    st.header("Overview of the Project Workflow")
+    image_path = os.path.join(current_dir, os.pardir, 'outputs', 'pipeline.png')
+    image = Image.open(image_path)  
+    st.image(image, caption='', width=700) 
 
     st.header("Future Perspectives:")
     st.write("""
