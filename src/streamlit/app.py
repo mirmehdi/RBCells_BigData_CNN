@@ -302,20 +302,20 @@ if page == "Multiclassification Models":
         st.image(image, use_column_width=True)
         
 
-        st.header("Classification report")
+        st.header("Classification Report on Test Data")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'cls_report_eff.png')) 
         st.image(image, use_column_width=True)
 
 
-        st.header("Heatmap presentation")
+        st.header("Confusion Matrix")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'heat_map_cls_Unet_seg_efficientnetB0.png')) 
         st.image(image, use_column_width=True)
 
-        st.header("Loss of EfficientNetB0 model")
+        st.header("Loss Plot")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Loss_Curve_EfficientNetB0.png')) 
         st.image(image, use_column_width=True)
 
-        st.header("Accuracy of EfficientNetB0 model")
+        st.header("Accuracy Plot")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Accuracy_Curve_EfficientNetB0.png')) 
         st.image(image, use_column_width=True)
 
@@ -327,15 +327,15 @@ if page == "Multiclassification Models":
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'vgg.png')) 
         st.image(image, use_column_width=True)
 
-        st.header("Classification report")
+        st.header("Classification Report on Test Data")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'screenshot_2024-06-27_at_17.33.21_720.png')) 
         st.image(image, caption='', use_column_width=True)
 
-        st.header("Heatmap presentation")
+        st.header("Confusion Matrix")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'cm_masked_vgg16.png')) 
         st.image(image, use_column_width=True)
 
-        st.header("Loss/Accuracy plot")
+        st.header("Loss and Accuracy Plots")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'train_loss_plots_vgg16.png')) 
         st.image(image, use_column_width=True)
 
@@ -348,15 +348,15 @@ if page == "Multiclassification Models":
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'vgg.png')) 
         st.image(image, use_column_width=True)
 
-        st.header("Classification report")
+        st.header("Classification Report on Test Data")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'screenshot_2024-06-27_at_17.34.32.png')) 
         st.image(image, caption='', use_column_width=True)
 
-        st.header("Heatmap presentation")
+        st.header("Confusion Matrix")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'cm_unmasked_vgg16.png')) 
         st.image(image, use_column_width=True)
 
-        st.header("Loss/Accuracy plot")
+        st.header("Loss and Accuracy Plots")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'train_loss_plots_vgg16_unmasked_720.png')) 
         st.image(image, caption='', use_column_width=True)
 
