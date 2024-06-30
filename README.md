@@ -1,4 +1,9 @@
-# Peripheral Blood Cell Classification Project
+<h2 style='text-align: center;'><span style='color:red'>Blood</span>Py 🩸 Automated Blood Cell Classifier</h2>
+
+<p align="center">
+  <img src="src/outputs/microscope_720.png" alt="Poster Image" width="400" height="400">
+</p>
+
 
 ## Overview
 This project aims to develop an automatic recognition system for classifying peripheral blood cell images into different cell types. The dataset used in this project consists of microscopic images of individual normal cells, acquired from the Core Laboratory at the Hospital Clinic of Barcelona. The dataset is organized into eight groups: neutrophils, eosinophils, basophils, lymphocytes, monocytes, immature granulocytes, erythroblasts, and platelets or thrombocytes.
