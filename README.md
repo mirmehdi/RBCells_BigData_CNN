@@ -1,5 +1,6 @@
-<h2 style='text-align: center;'><span style='color:red'>Blood</span>Py 🩸 Automated Blood Cell Classifier</h2>
-
+<div align="center">
+  <h1><span style='color:red'>Blood</span>Py 🩸 Automated Blood Cell Classifier</h1>
+</div>
 <p align="center">
   <img src="src/outputs/microscope_720.png" alt="Poster Image" width="400" height="400">
 </p>
