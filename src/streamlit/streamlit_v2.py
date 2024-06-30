@@ -11,7 +11,7 @@ current_dir = os.getcwd()
 
 
 ################################################### Introduction 
-st.title("Blood-py 🩸 - blood cell classifier")
+st.title("Blood-py 🩸 Blood Cell Classifier")
 st.sidebar.title("Navigation")
 pages=["Home", "Preliminary analysis", "Segmentation", "Statistical Analysis", "Classification with Transfer learning","Interactive Test", "Perspectives"]
 page=st.sidebar.radio("Go to", pages)
@@ -23,7 +23,7 @@ if page == "Home":
     st.image(image, caption='Blood-py - Blood Cell Classifier', use_column_width=True)
 
         # Add some text
-    st.header("Blood-py : a deep learning-based software for the automatic detection and classification of peripheral blood cells. ")
+    st.header("Context")
     st.write("""
         Peripheral blood cells, including erythrocytes, leukocytes, and thrombocytes, play crucial roles in oxygen transport and immune 
              defense. They constitute about 45% of blood volume, with the remaining 55% being plasma. The analysis of peripheral blood cells serves as a critical diagnostic tool, with morphological examination being the cornerstone for identifying over 80% of haematological diseases, such as anaemia, leukaemia, or lymphoma. 
@@ -33,13 +33,13 @@ if page == "Home":
    
     
     image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'classes_samples.png'))  # Replace with your image path
-    st.image(image, caption='Leukopy - Blood Cell Classifier', use_column_width=True)
+    st.image(image, caption='Histology of the different types of blood cells.', use_column_width=True)
     
     # Add some text
     
     st.header("Problematic")
     st.write("""
-        Traditional diagnostic methods for blood diseases rely on manual inspection by haematologists, which is laborious, time-consuming, and prone to subjectivity. Automated systems exist but often cannot match human expertise, particularly in detecting subtle morphological differences indicative of diseases like leukemia. 
+        Traditional diagnostic methods for blood diseases rely on manual inspection by haematologists, which is expensive, laborious, and prone to subjectivity. Automated systems exist but often cannot match human expertise, particularly in detecting subtle morphological differences indicative of diseases like leukemia. 
         Traditional machine learning methods show promise but fail to generalize well to diverse datasets. 
 
     """)
@@ -54,21 +54,18 @@ if page == "Home":
 ################################################### Preliminary analysis
 
 if page == "Preliminary analysis":
-
-    # explainatoin about figures
-    st.header("DataSet Study")
-    st.write("""
-        - The dataset is imbalanced, with some classes having significantly more images than others.
-        - Neutrophils and Eosinophils have the highest number of images, with 3330 and 3117 images, respectively.
-        - Lymphocytes and Basophils have the lowest number of images, with 1214 and 1218 images, respectively.
-        """)
-
+    
     # dataset
     rawimg_features = pd.read_csv(os.path.join(current_dir, os.pardir, 'outputs', 'cell_largest_features.csv'))
     rawimg_features.drop('Image_Path',axis=1,inplace = True)
-    st.header(" DataSet")
+    st.header(" Dataset")
 
-    st.dataframe(rawimg_features.head())
+    st.write("""
+        We utilised a dataset comprising 17,092 images of individual normal peripheral blood cells, acquired using the CellaVision DM96 analyzer at the Core Laboratory of the Hospital Clinic of Barcelona.
+        You can access the original dataset [here](https://data.mendeley.com/datasets/snkd93bnjr/1).
+    """)
+
+    #st.dataframe(rawimg_features.head())
 
 
     # distribution of cell numbers
@@ -76,9 +73,6 @@ if page == "Preliminary analysis":
     st.image(image, caption='Cell Classes', use_column_width=True)
     # distribution of image sizes
     st.header("Image size")
-    st.write("""
-        Distribution of Image size
-        """)
     image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Image_sizes.jpg')) 
     st.image(image, caption='Image Size Distribution', use_column_width=True)
 
@@ -89,67 +83,67 @@ if page == "Preliminary analysis":
     image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'boxplot_of_largest_cell_area_by_cell_type.png')) 
     st.image(image, caption='Cell area calculated on raw image', use_column_width=True)
 
-    st.header("Cell Primeter")
+    st.header("Cell Perimeter")
     image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'boxplot_of_largest_cell_perimeter_by_cell_type_720.png')) 
-    st.image(image, caption='Cell primeter calculated on raw image', use_column_width=True)
+    st.image(image, caption='Cell perimeter calculated on raw image', use_column_width=True)
 
     st.header("Cell Circularity")
     image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'boxplot_of_largest_cell_perimeter_by_cell_type.png')) 
     st.image(image, caption='Cell circularity calculated on raw image', use_column_width=True)
 
+        # explainatoin about figures
+    st.header("Summary")
+    st.write("""
+        - The dataset is imbalanced, with some classes having significantly more images than others.
+        - Neutrophils and Eosinophils have the highest number of images, with 3330 and 3117 images, respectively.
+        - Lymphocytes and Basophils have the lowest number of images, with 1214 and 1218 images, respectively.
+        """)
+
+
     ################################################### Segmentation
 
 if page == "Segmentation":
 
-    st.write("### Model of Segmentation")
-    if st.checkbox("### No segmentation"):
-         if st.checkbox("### Details"):
-                st.write("-->Dataset were fitted to classification model directly without background removal")
+    st.write("### Select your Segmentation Model")
+
+    if st.checkbox("### Thresholding-based Segmentation"):
+        if st.checkbox("### Details"):
+            st.header("Thresholding Approach")
+            st.write("""
+                - **Thresholding Approach**:
+                    - Aim: Distinguish cells from the background using contrast stretching and colour masking techniques.
+                    - Images in RGB --> normalized to Grayscale --> contrast streching --> color mask. 
+                - **Advantages**:
+                    - Simplicity: easy to implement and computationally efficient.
+                    - Speed: processes images quickly, making it suitable for applications requiring rapid results.
+                - **Limitations**:
+                    - Accuracy: struggles with complex images where cell boundaries are not well-defined.
+                    - Generalisation: may not perform well on varied datasets with different lighting and staining conditions.
+
+                """)
         
-    if st.checkbox("### Thresholding-based segmentation"):
-            if st.checkbox("### Details"):
-                st.header("Thresholding Approach")
-                st.write("""
-                    - Thresholding Approach:
-                        - Aim: Distinguish cells from the background using contrast stretching and colour masking techniques.
-                    -Steps:
-                        - Images in both RGB --> normalized to Grayscale --> contrast streching --> color mask 
-                    - Advantages:
-                        - Simplicity: Easy to implement and computationally efficient.
-                        - Speed: Processes images quickly, making it suitable for applications requiring rapid results.
-                    - Limitations:
-                        - Accuracy: Struggles with complex images where cell boundaries are not well-defined.
-                        - Generalisation: May not perform well on varied datasets with different lighting and staining conditions.
+        st.header("Output for Threshold Segmentation")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'masked_img_normalization.png')) 
+        st.image(image, caption='Output for threshold segmentation', use_column_width=True)    
 
-                    """)
-            
-            st.header("Output for threshold segmentation")
-            image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'masked_img_normalization.png')) 
-            st.image(image, caption='Output for threshold segmentation', use_column_width=True)
-
-                
-
-    if st.checkbox("### Image segmentation with UNet"):
+    if st.checkbox("### Image Segmentation with UNet"):
         if st.checkbox("### Details"):
             st.header("UNet Approach")
             st.write("""
-                - Thresholding Approach:
-                    - Aim: mploys a deep learning-based UNet model, a convolutional neural network architecture designed for biomedical image segmentation.
+                - **Thresholding Approach**:
+                    - Aim: Employing a deep learning-based UNet model, a convolutional neural network architecture designed for biomedical image segmentation.
                 - **Annotation**: 
-                    - 350 images (chosen in a balanced format) was manually annotated using VGG annotation tool developed by  robotic group of Oxford Univerwity. 
-                
+                    - 350 images (chosen in a balanced format) were manually annotated using the VGG annotation tool developed by the robotic group of Oxford Univerwity. 
                 - **Segmentation Steps**:
-                    - Annotation: 350 images (chosen in a balanced format) was manually annotated using VGG annotation tool developed by  robotic group of Oxford Univerwity. 
-                    - Developed a UNet model (manually)
-                    - Trained model on 0.9 of data and validated on 0.1 of 350 images
-                
-                - **Further Steps for Artifact removal**: 
-                    - label connected regions
-                    - find largest regions
-                        - remove the region if the size is small 
-                        - consider image as bad image if there are more than one big region
+                    - Develop a UNet model.
+                    - Train model on 0.9 of data and validated on 0.1 of 350 images.
+                - **Additional steps for artifact removal**: 
+                    - Label connected regions.
+                    - Find largest regions:
+                        - remove the region, if the size is small.
+                        - consider image as a bad image if there are more than one big region.
                 - **Outlier detection**: 
-                    - We calculate the area of each segmented image and classify them as "bad calls" if the z-score of it is three standard deviation beyond the mean of each class. 
+                    - We calculate the area of each segmented image and classify them as "bad cells" if the z-score of its area is three standard deviation beyond the mean of each class. 
                 
                 
                 - **Advantages**:
@@ -167,7 +161,7 @@ if page == "Segmentation":
         st.image(image, caption='Unet segmentatoin Algorithm', use_column_width=True)
 
 
-        st.header("Sample of Unet binary segmentation")
+        st.header("sample of Unet Binary segmentation")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Unet_seg_sample_S1.jpg')) 
         st.image(image, caption='A sample of Unet Segmentation: on left we see an original image in grayscale, in middle we see a true segmentation, and right side is the predicted binary segmentation',
          use_column_width=True)
@@ -176,15 +170,15 @@ if page == "Segmentation":
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'artifact_removal.jpg')) 
         st.image(image, caption='delete regions with smaller sizes', use_column_width=True)
 
-        st.header("Image with Multiple cell recognized as bad images")
+        st.header("Image with Multiple cell recognition as bad images")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Multicell_recog.jpg')) 
         st.image(image, caption='Consider images with mor than one big regions as bad image', use_column_width=True)
 
-        st.header("Detect ouliers")
+        st.header("Detect Ouliers")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'Outliers_cells.jpg')) 
         st.image(image, caption='The outliers are cell type which has area more than three standard deviation from the mean of the cell area at each group ', use_column_width=True)
 
-        st.header("Ouliers are Abnormal cells")
+        st.header("Ouliers are Abnormal Cells")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'deadcells_oulier.jpg')) 
         st.image(image, caption='The outliers are abnormal cells and we do not want to classify them', use_column_width=True)
 
@@ -199,29 +193,10 @@ if page == "Segmentation":
 
 
 if page == "Statistical Analysis":
-    # unet seg
-    st.write("### Statistical Analysis based on Segmentation Model")
 
-    if st.checkbox("### Based on Image segmentation with UNet"):
-        st.header("Cell area distribution")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs','stats_UNet_masks', 'White_Area_distribution.png')) 
-        st.image(image, caption='The distribution of cell area based on Unet model', use_column_width=True)
-
-      
-        st.header("Significance matrix")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs','stats_UNet_masks', 'significance_matrix_heatmap_White_Area.png')) 
-        st.image(image, caption='Significance matrix comparing cell area between different cell types', use_column_width=True)
-
-       
-        st.header("Violon plot")
-        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs','stats_UNet_masks', 'White_Area_violinplot.png')) 
-        st.image(image, caption=' Violin plots of cell area from the different cell types', use_column_width=True)
-
-
-
-
+    st.write("### Select your Segmentation Model")
     # normalization seg.
-    if st.checkbox("### Based on Thresholding-based segmentation"):
+    if st.checkbox("### Thresholding-based segmentation"):
         st.header("Cell area distribution")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs','stats_threshold_masks', 'Mask_Area_distribution.png')) 
         st.image(image, caption='The distribution of cell area based on Thresholding model', use_column_width=True)
@@ -232,12 +207,28 @@ if page == "Statistical Analysis":
         st.image(image, caption='Significance matrix comparing cell area between different cell types', use_column_width=True)
 
        
-        st.header("Violon plot")
+        st.header("Violin plot")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs','stats_threshold_masks', 'Mask_Area_violinplot.png')) 
+        st.image(image, caption=' Violin plots of cell area from the different cell types', use_column_width=True)    
+
+    # unet seg
+    if st.checkbox("### Image segmentation with UNet"):
+        st.header("Cell area distribution")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs','stats_UNet_masks', 'White_Area_distribution.png')) 
+        st.image(image, caption='The distribution of cell area based on Unet model', use_column_width=True)
+
+      
+        st.header("Significance matrix")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs','stats_UNet_masks', 'significance_matrix_heatmap_White_Area.png')) 
+        st.image(image, caption='Significance matrix comparing cell area between different cell types', use_column_width=True)
+
+       
+        st.header("Violin plot")
+        image = Image.open(os.path.join(current_dir, os.pardir, 'outputs','stats_UNet_masks', 'White_Area_violinplot.png')) 
         st.image(image, caption=' Violin plots of cell area from the different cell types', use_column_width=True)
 
 
-   
+  
 
  ################################################### Classificatoin 
 
@@ -254,13 +245,13 @@ if page == "Classification with Transfer learning":
     if selected_model == "EfficientNetB0":
 
         cls_report = pd.read_csv(os.path.join(current_dir, os.pardir, 'outputs', 'classification_report_unet_seg.csv')) 
-        st.header(" Transfer learning with EfficientNetB0")
+        st.header("Transfer learning with EfficientNetB0")
         st.header("Algorithm")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'efficient.png')) 
         st.image(image, caption='EfficientNetB0 Algorithm', use_column_width=True)
         
 
-        st.header(" Classification report")
+        st.header("Classification report")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'cls_report_eff.png')) 
         st.image(image, caption='Classification report', use_column_width=True)
 
@@ -448,7 +439,10 @@ if page == "Perspectives":
        -  Enhances accuracy and efficiency in haematological diagnostics, addressing challenges of manual inspection.
     """)
 
-    st.header("Key Features")
+    st.header("Future Perspectives:")
     st.write("""
-       
+       - **Expanded Datasets**: To improve the generalisability and robustness of the model, we plan to incorporate more diverse and comprehensive datasets, including images with varying staining techniques and pathological conditions.
+       - **Clinical Validation**: Collaborating with haematologists and clinical laboratories to validate the system on real-world data, ensuring its practical applicability and reliability in clinical settings.
+       - **User Interface Development**: Developing a user-friendly interface for Blood-py, enabling seamless integration into clinical workflows and providing intuitive visualisations and reports for haematologists.
+
     """)
