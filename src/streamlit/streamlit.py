@@ -102,8 +102,10 @@ if page == "Preliminary analysis":
 if page == "Segmentation":
 
     st.write("### Model of Segmentation")
-
-
+    if st.checkbox("### No segmentation"):
+         if st.checkbox("### Details"):
+                st.write("-->Dataset were fitted to classification model directly without background removal")
+        
     if st.checkbox("### Thresholding-based segmentation"):
             if st.checkbox("### Details"):
                 st.header("Thresholding Approach")
@@ -201,7 +203,7 @@ if page == "Statistical Analysis":
     st.write("### Statistical Analysis based on Segmentation Model")
 
     if st.checkbox("### Based on Image segmentation with UNet"):
-        st.header("Cell area ditribution")
+        st.header("Cell area distribution")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs','stats_UNet_masks', 'White_Area_distribution.png')) 
         st.image(image, caption='The distribution of cell area based on Unet model', use_column_width=True)
 
@@ -242,7 +244,7 @@ if page == "Statistical Analysis":
 if page == "Classification with Transfer learning":
     st.header("Classification with Transfer Learning")
 
-    model_options = ["CNN_masked_VGG16","EfficientNetB0", "CNN_unmasked_VGG16"]
+    model_options = ["CNN_unmasked_VGG16", "CNN_masked_VGG16","EfficientNetB0"]
     selected_model = st.selectbox("Select the pre-trained model for transfer learning:", model_options)
 
     st.write(f"You selected: {selected_model}")
@@ -258,7 +260,7 @@ if page == "Classification with Transfer learning":
         st.image(image, caption='EfficientNetB0 Algorithm', use_column_width=True)
         
 
-        st.header(" Transfer learning with EfficientNetB0")
+        st.header(" Classification report")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'cls_report_eff.png')) 
         st.image(image, caption='Classification report', use_column_width=True)
 
@@ -291,7 +293,7 @@ if page == "Classification with Transfer learning":
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'cm_masked_vgg16.png')) 
         st.image(image, caption='Heat map presentation', use_column_width=True)
 
-        st.header("Heatmap presentation")
+        st.header("Loss/Accuracy plot")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'train_loss_plots_vgg16.png')) 
         st.image(image, caption='Heat map presentation', use_column_width=True)
 
@@ -312,7 +314,7 @@ if page == "Classification with Transfer learning":
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'cm_unmasked_vgg16.png')) 
         st.image(image, caption='Heat map presentation', use_column_width=True)
 
-        st.header("Loss_accuracy")
+        st.header("Loss/Accuracy plot")
         image = Image.open(os.path.join(current_dir, os.pardir, 'outputs', 'train_loss_plots_vgg16_unmasked_720.png')) 
         st.image(image, caption='', use_column_width=True)
 
@@ -368,7 +370,7 @@ if page == "Interactive Test":
 
     # Get the current directory
     current_dir = os.getcwd()
-    st.write("Current Directory:", current_dir)
+    
 
     # Adjust these paths to your directory structure
     model_path = os.path.join(current_dir, os.pardir, 'models', 'efficientnet_model.h5')
@@ -376,7 +378,7 @@ if page == "Interactive Test":
 
     # Print paths for debugging
     st.write("Model Path:", model_path)
-    st.write("Clean Data Path:", clean_data_path)
+    
 
     # Load the model
     try:
@@ -432,3 +434,21 @@ if page == "Interactive Test":
             st.pyplot(fig)
         except Exception as e:
             st.write(f"Error: {str(e)}")
+
+######################### #############Perspectives
+
+if page == "Perspectives":
+     
+
+        # Add some text
+    st.header("Blood-py Overview:")
+    st.write("""
+       -  Deep learning solution for automated detection and classification of peripheral blood cells.
+       -  Utilizes convolutional neural networks, particularly U-Net for segmentation and pre-trained models for feature extraction.
+       -  Enhances accuracy and efficiency in haematological diagnostics, addressing challenges of manual inspection.
+    """)
+
+    st.header("Key Features")
+    st.write("""
+       
+    """)
