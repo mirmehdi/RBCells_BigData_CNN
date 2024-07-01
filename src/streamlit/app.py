@@ -87,7 +87,7 @@ if page == "Overview":
     # Add some text
     st.header("Context")
     st.markdown("""
-    - **Peripheral blood cells**, including *erythrocytes*, *leukocytes*, and *thrombocytes*, play crucial roles in oxygen transport and immune defense.
+    - **Peripheral blood cells**, including *erythrocytes*, *leukocytes*, and Platelets referred to as *thrombocytes*, play crucial roles in oxygen transport and immune defense.
     - They constitute about 45% of blood volume, with the remaining 55% being plasma.
     - The analysis of peripheral blood cells serves as a critical diagnostic tool, with morphological examination being the cornerstone for identifying over 80% of haematological diseases, such as *anaemia*, *leukaemia*, or *lymphoma*.
     """)
